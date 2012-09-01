@@ -50,3 +50,15 @@ instance * orange::spawn(action * source)
 		return matrix[0];
 	}
 }
+
+int orange::takeHit(action *& cMove, hStat & s, int b, int &f, int &c, int &h, int &p)
+{
+	int freeze = character::takeHit(cMove, s, b, f, c, h, p);
+	if(p == 1){ 
+		for(int i = 0; i < matrixComplexity; i++){
+			if(matrix[i]->hitComplexity <= 1 && matrix[i]->hitbox[i].w < 1)
+				matrix[i]->dead = true;
+		}
+	}
+	return freeze;
+}

@@ -8,6 +8,7 @@ public:
 
 	void cull(int);
 	void step(action *&, int&, int&);
+	int takeHit(action *&, hStat&, int, int&, int&, int&, int&);
 	instance ** matrix;
 
 	int matrixComplexity;
