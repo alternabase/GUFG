@@ -23,3 +23,5 @@ black
 #Moves
 DA = h
 A = h
+DB = h
+B = h

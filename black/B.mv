@@ -7,11 +7,11 @@ State: 256 : 496
 Damage: 18
 Stun: 14
 Untech: 14
-Push: -20
-Lift: -12
-Blowback: -4
-Gain: 0 : 0
-Cost: 15
+Push: 20
+Lift: 18
+Blowback: 4
+Gain: 0 : 4
+Cost: 0
 Blockable: 7 
 Blocks: 0
 Properties: 
