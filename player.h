@@ -35,7 +35,9 @@ public:
 	virtual void step();
 
 	virtual void getMove(bool*, bool*, SDL_Rect &, bool);
+	virtual int takeHit(int, hStat&);
 	virtual void enforceGravity(int, int);
+	void enforceAttractor(attractor*);
 	virtual void invertVectors(int);
 	virtual void addVector(SDL_Rect&);
 	virtual void removeVector(int);
@@ -48,6 +50,8 @@ public:
 	virtual bool spriteCheck();
 	virtual void connect(int, hStat&);
 	virtual void pushInput(bool*);
+	int particleType;
+	int blockType;
 protected:
 	avatar * v;
 };
@@ -81,13 +85,11 @@ public:
 	bool elasticY:1;
 	bool slide:1;
 	bool stick:1;
-	int blockType;
 	int hover;
 
 	bool rCorner, lCorner;
 
 	int particleLife;
-	int particleType;
 
 	/*Helper functions for "resolve" tick*/
 	void checkBlocking();
