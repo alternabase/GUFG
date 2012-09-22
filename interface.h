@@ -50,7 +50,7 @@ public:
 
 	player * p[2];
 	bool * sAxis[2];	//Initial input buffering.
-	bool * posEdge[2];
+	int * posEdge[2];
 	bool * negEdge[2];
 	bool select[2];
 	int selection[2];
@@ -66,6 +66,7 @@ public:
 	bool shortcut:1;
 	int combo[2];
 	int damage[2];
+	bool illegit[2];
 	int numRounds;
 	bool gameover;
 	float scalingFactor, sf;
@@ -74,6 +75,12 @@ public:
 	int thingComplexity;
 	Mix_Music *menuMusic;
 	Mix_Music *matchMusic;
+	Mix_Chunk **announceWinner;
+	Mix_Chunk *announceRound[3];
+	Mix_Chunk *announceDraw[2];
+	Mix_Chunk *announceFight;
+	Mix_Chunk *announceEnd[2];
+
 	attractor ** globals;
 	int attractorComplexity;
 
