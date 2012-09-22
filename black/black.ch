@@ -21,7 +21,7 @@ black
 ?ForwardTech = a6 a9 a3
 ?StopTech = a8
 #Moves
-DA = h
-A = h
-DB = h
-B = h
+DA = hDA
+A = hA
+DB = hDB
+B = hB
