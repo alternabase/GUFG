@@ -25,3 +25,5 @@ DA = hDA
 A = hA
 DB = hDB
 B = hB
+DC = hDC
+C = hC
