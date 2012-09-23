@@ -224,7 +224,7 @@ void interface::matchInit()
 	p[1]->secondInstance = 0;
 	if(!select[0] || !select[1]){
 		Mix_VolumeMusic(100);
-		Mix_PlayMusic(menuMusic,-1);
+		Mix_PlayMusic(menuMusic, -1);
 		printf("Please select a character:\n");
 	}
 	q = 0;
