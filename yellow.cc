@@ -61,10 +61,10 @@ action * yellow::createMove(char * fullName)
 	return m;
 }
 
-void yellow::drawMeters(int ID, float scalingFactor)
+void yellow::drawMeters(int ID, float scalingFactor, int hidden)
 {
 	int color;
-	character::drawMeters(ID, scalingFactor);
+	character::drawMeters(ID, scalingFactor, hidden);
 	SDL_Rect c1;
 	if(meter[3] >= 0){
 		c1.w = meter[3]/3*2; 
@@ -134,18 +134,16 @@ bool flashSummon::setParameter(char * buffer)
 	} else return action::setParameter(savedBuffer);
 }
 
-bool flashStep::check(bool pos[5], bool neg[5], int t, int f, int* resource, SDL_Rect& p)
+bool flashStep::check(SDL_Rect& p, int resource[])
 {
-	if(!action::check(pos, neg, t, f, resource, p)) return 0;
 	if(resource[3] < 1) return 0;
-	return 1;
+	else return action::check(p, resource);
 }
 
-bool flashSummon::check(bool pos[5], bool neg[5], int t, int f, int* resource, SDL_Rect& p)
+bool flashSummon::check(SDL_Rect& p, int resource[])
 {
-	if(!special::check(pos, neg, t, f, resource, p)) return 0;
 	if(resource[3] < 0) return 0;
-	return 1;
+	else return action::check(p, resource);
 }
 
 void flashSummon::execute(action * last, int *& resource)

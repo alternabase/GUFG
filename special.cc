@@ -15,30 +15,28 @@ negNormal::negNormal(const char * n)
 	build(n);
 }
 
-bool negNormal::check(bool pos[5], bool neg[5], int t, int f, int* resource, SDL_Rect &p)
+bool negNormal::activate(int pos[5], bool neg[5], int pattern, int t, int f, int resource[], SDL_Rect &p)
 {
 	for(int i = 0; i < 5; i++){
-		if(button[i] == 1){
+		if(pattern & (1 << i)){
 			if(!neg[i]) return 0;
 		}
 	}
 	if(t > tolerance) return 0;
 	if(f > activation) return 0;
-	if(resource[0] < cost) return 0;
-	return 1;
+	return check(p, resource);
 }
 
-bool special::check(bool pos[5], bool neg[5], int t, int f, int* resource, SDL_Rect &p)
+bool special::activate(int pos[5], bool neg[5], int pattern, int t, int f, int resource[], SDL_Rect &p)
 {
 	for(int i = 0; i < 5; i++){
-		if(button[i] == 1){
-			if(!pos[i] && !neg[i]) return 0;
+		if(pattern & (1 << i)){
+			if(pos[i] != 1 && !neg[i]) return 0;
 		}
 	}
 	if(t > tolerance) return 0;
 	if(f > activation) return 0;
-	if(resource[0] < cost) return 0;
-	return 1;
+	return check(p, resource);
 }
 
 super::super(const char * n)
@@ -46,12 +44,16 @@ super::super(const char * n)
 	build(n);
 }
 
-bool mash::check(bool pos[5], bool neg[5], int t, int f, int* resource, SDL_Rect &p)
+bool mash::activate(int pos[5], bool neg[5], int pattern, int t, int f, int resource[], SDL_Rect &p)
 {
-	if(t > tolerance) return 0;
-	if(f > activation) return 0;
-	for(int i = 0; i < 5; i++){
-		if(pos[i]) return 1;
+	int go = 0;
+	if(action::activate(pos, neg, pattern, t, f, resource, p)){
+		for(int i = 0; i < 5; i++){
+			if(pos[i] >= minHold){
+				if(pos[i] <= maxHold || !maxHold) go++;
+			}
+		}
+		if(go >= buttons) return 1;
 	}
 	return 0;
 }
@@ -60,6 +62,26 @@ int super::arbitraryPoll(int q, int f)
 {
 	if(q == 2 && f == freezeFrame) return freezeLength;
 	else return 0;
+}
+
+void mash::zero()
+{
+	action::zero();
+	buttons = 1;
+}
+
+bool mash::setParameter(char * buffer)
+{
+	char savedBuffer[100];
+	strcpy(savedBuffer, buffer);
+
+	char * token = strtok(buffer, "\t: \n-");
+
+	if(!strcmp("Buttons", token)){
+		token = strtok(NULL, "\t: \n-");
+		buttons = atoi(token); 
+		return 1;
+	} else return action::setParameter(savedBuffer);
 }
 
 bool super::setParameter(char * buffer)
@@ -106,21 +128,18 @@ int werf::arbitraryPoll(int n, int f)
 	return 0;
 }
 
-bool werf::check(SDL_Rect &p)
+bool werf::check(SDL_Rect &p, int resource[])
 {
-	if(p.w > xRequisite) return 0;
 	if(p.y != 0) return 0;
 	if(p.x > 0) return 0;
-	return 1;
+	return action::check(p, resource);
 }
 
-bool luftigeWerf::check(SDL_Rect &p)
+bool luftigeWerf::check(SDL_Rect &p, int resource[])
 {
-	if(p.w > xRequisite) return 0;
-	if(p.h > yRequisite) return 0;
 	if(p.y == 0) return 0;
 	if(p.x > 0) return 0;
-	return 1;
+	return action::check(p, resource);
 }
 
 bool werf::setParameter(char * buffer)
@@ -130,14 +149,7 @@ bool werf::setParameter(char * buffer)
 
 	char * token = strtok(buffer, "\t: \n-");
 
-	if(!strcmp("Proximity", token)){
-		token = strtok(NULL, "\t: \n");
-		xRequisite = atoi(token); 
-
-		token = strtok(NULL, "\t: \n");
-		yRequisite = atoi(token); 
-		return 1;
-	} else if (!strcmp("Position", token)){
+	if (!strcmp("Position", token)){
 		token = strtok(NULL, "\t: \n");
 		startPosX = atoi(token); 
 

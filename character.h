@@ -16,14 +16,15 @@ public:
 	bool spriteCheck(action *&, int);
 	virtual void draw(action *&, int, int, int, int, float);//Pass sprite information up.
 	virtual action * createMove(char*);
-	virtual action * hook(int[40], int, int, int*, bool[5], bool[5], action *, SDL_Rect&, int&, int&);
+	virtual action * hook(int[40], int, int, int*, int[5], bool[5], action *, SDL_Rect&, int&, int&);
 	virtual void build(const char*, const char*);
 	virtual void processMove(action * m);
 	virtual void sortMove(action *, char*);
-	virtual void prepHooks(int, action *&, action *&, action *&, int[], bool[], bool[], SDL_Rect &, int&, int&, int&, bool);	//Take input from the game and propagate it to the appropriate actionTrie.
+	virtual void prepHooks(int, action *&, action *&, action *&, int[], int[], bool[], SDL_Rect &, int&, int&, int&, bool);	//Take input from the game and propagate it to the appropriate actionTrie.
 	//BRB prepping my hooks
 	virtual bool death(action *&, int) { return 0; }
 
+	virtual int takeHit(action *&, hStat&, int, int&, int&, int&, int&) { return 0; }
 	virtual void getName(const char*, const char*);
 	virtual void connect(action *&, action *&, action *&, hStat&, int&, int);
 	virtual void step(action *&, int&, int&);
@@ -51,14 +52,14 @@ public:
 	virtual void build(const char*, const char*);//This will *eventually* be the function that parses the character constructor file.
 
 	virtual void neutralize(action *&);
-	virtual void drawMeters(int, float);
+	virtual void drawMeters(int, float, int);
 	virtual void init(action *&);
-	virtual bool checkBlocking(action *&, int, int&, int&);
+	virtual int checkBlocking(action *&, int[], int&, int&);
 	virtual void resetAirOptions();
 	virtual void land(action *&, int &, int &, int &);
 	virtual void sortMove(action *, char*);
 	virtual int takeHit(action *&, hStat&, int, int&, int&, int&, int&);
-	virtual action * hook(int[40], int, int, int*, bool[5], bool[5], action *, SDL_Rect&, int&, int&);
+	virtual action * hook(int[40], int, int, int*, int[5], bool[5], action *, SDL_Rect&, int&, int&);
 
 	looping * dead;
 	action * airNeutral;

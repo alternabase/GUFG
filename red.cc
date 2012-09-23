@@ -8,19 +8,7 @@ red::red()
 	airHead = new actionTrie;
 	head = new actionTrie;
 	build("Red", "Red");
-	backup = new red(this);
-}
-
-red::red(red* b)
-{
-	delete [] meter;
-	
-	meter = new int[5];
-	
-	airHead = new actionTrie;
-	head = new actionTrie;
-	build("Red", "Red");
-	backup = b;
+	backup = new instance;
 }
 
 void red::tick()
@@ -36,10 +24,10 @@ void red::step(action *& cMove, int &f, int &freeze)
 	character::step(cMove, f, freeze);
 }
 
-void red::drawMeters(int ID, float scalingFactor)
+void red::drawMeters(int ID, float scalingFactor, int hidden)
 {
 //	int color1, color2;
-	character::drawMeters(ID, scalingFactor);
+	character::drawMeters(ID, scalingFactor, hidden);
 /*	SDL_Rect c1, c2;
 	if(meter[3] >= 0){
 		c1.w = meter[3]; 
@@ -105,19 +93,12 @@ redCancel::redCancel(const char* n)
 	build(n); 
 }
 
-bool redCancel::check(bool pos[5], bool neg[5], int t, int f, int* resource, SDL_Rect&)
+bool redCancel::check(SDL_Rect& p, int resource[])
 {
-	for(int i = 0; i < 5; i++){
-		if(button[i] == 1){
-			if(!pos[i] && !neg[i]) return 0;
-		}
-	}
-	if(t > tolerance) return 0;
-	if(f > activation) return 0;
 //	if(resource[0] < cost) return 0;
 //	if(resource[3] < 270) return 0;
 	if(resource[4] > 0) return 0;
-	return 1;
+	return action::check(p, resource);
 }
 
 void redCancel::execute(action * last, int *& resource)
