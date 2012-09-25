@@ -93,7 +93,7 @@ void player::roundInit()
 	throwInvuln = 0;
 	particleLife = 0;
 	particleType = 0;
-	if(ID == 1){ 
+	if(ID == 1) {
 		facing = 1;
 		posX = 1400;
 	} else {
@@ -116,12 +116,12 @@ bool player::readConfig()
 	else{
 		char * token;
 		char buffer[30];
-		for(int i = 0; i < 10; i++){
-			read.get(buffer, 30, ':'); read.ignore(); 
+		for(int i = 0; i < 10; i++) {
+			read.get(buffer, 30, ':'); read.ignore();
 			input[i].type = atoi(buffer);
 			read.ignore();
 			read.get(buffer, 30, '\n'); read.ignore();
-			switch (input[i].type){
+			switch (input[i].type) {
 			case SDL_JOYAXISMOTION:
 				token = strtok(buffer, " \n");
 				input[i].jaxis.which = atoi(token);
@@ -137,7 +137,7 @@ bool player::readConfig()
 				input[i].jbutton.button = atoi(token);
 				break;
 			case SDL_KEYDOWN:
-				token = strtok(buffer, " \n");	
+				token = strtok(buffer, " \n");
 				input[i].key.keysym.sym = (SDLKey)atoi(token);
 				break;
 			default:
@@ -156,7 +156,7 @@ bool player::aerial()
 
 SDL_Event player::writeConfig(int i)
 {
-	SDL_Event temp; 
+	SDL_Event temp;
 	/*Set up ALL the inputs*/
 
 	/*Set up dummy event*/
@@ -164,13 +164,13 @@ SDL_Event player::writeConfig(int i)
 	/*Flag for breaking the loop*/
 	bool configFlag = 0;
 
-	while(SDL_PollEvent(&temp));
-	while (configFlag == 0){
+	while(SDL_PollEvent(&temp)) ;
+	while (configFlag == 0) {
 		if (SDL_PollEvent(&temp)) {
 			switch (temp.type) {
 			case SDL_JOYAXISMOTION:
-				if(temp.jaxis.axis < 6){
-					for(int j = 0; j < 4; j++){
+				if(temp.jaxis.axis < 6) {
+					for(int j = 0; j < 4; j++) {
 						if(temp.jaxis.value == 0 || abs(temp.jaxis.value) < abs(input[j].jaxis.value - 100))
 							break;
 						else {
@@ -188,7 +188,7 @@ SDL_Event player::writeConfig(int i)
 				input[i] = temp;
 				configFlag = 1;
 				break;
-			default: 
+			default:
 				break;
 			}
 		}
@@ -199,7 +199,7 @@ SDL_Event player::writeConfig(int i)
 void player::characterSelect(int i)
 {
 	v = NULL;
-	switch(i){
+	switch(i) {
 	case 1:
 		v = new red;
 		break;
@@ -216,12 +216,12 @@ void instance::updateRects()
 {
 	if(cMove != NULL) {
 		cMove->pollRects(collision, hitreg, regComplexity, hitbox, hitComplexity, currentFrame, connectFlag);
-		for(int i = 0; i < hitComplexity; i++){
+		for(int i = 0; i < hitComplexity; i++) {
 			if(facing == -1) hitbox[i].x = posX - hitbox[i].x - hitbox[i].w;
 			else hitbox[i].x += posX;
 			hitbox[i].y += posY;
 		}
-		for(int i = 0; i < regComplexity; i++){
+		for(int i = 0; i < regComplexity; i++) {
 			if(facing == -1) hitreg[i].x = posX - hitreg[i].x - hitreg[i].w;
 			else hitreg[i].x += posX;
 			hitreg[i].y += posY;
@@ -234,7 +234,7 @@ void instance::updateRects()
 
 void instance::combineDelta()
 {
-	for(int i = 0; i < momentumComplexity; i++){
+	for(int i = 0; i < momentumComplexity; i++) {
 		deltaX += momentum[i].x;
 		deltaY += momentum[i].y;
 
@@ -255,7 +255,7 @@ void instance::enforceAttractor(attractor* p)
 	SDL_Rect resultant;
 	resultant.x = p->x*facing; resultant.y = p->y; resultant.w = 0; resultant.h = 0;
 	if(!pick()->aerial) resultant.y = 0;
-	switch(p->type){
+	switch(p->type) {
 	case 0:
 		addVector(resultant);
 		break;
@@ -268,10 +268,10 @@ void instance::enforceGravity(int grav, int floor)
 {
 	SDL_Rect g; g.x = 0; g.y = grav; g.w = 0; g.h = 0;
 
-	if(collision.y > floor && pick()->aerial == 0){
+	if(collision.y > floor && pick()->aerial == 0) {
 		pick()->aerial = 1;
 	}
-	else if(pick()->aerial && !freeze){ 
+	else if(pick()->aerial && !freeze) {
 		addVector(g);
 	}
 }
@@ -280,10 +280,10 @@ void player::enforceGravity(int grav, int floor)
 {
 	SDL_Rect g; g.x = 0; g.y = grav; g.w = 0; g.h = 0;
 
-	if(collision.y > floor && pick()->aerial == 0){
+	if(collision.y > floor && pick()->aerial == 0) {
 		pick()->aerial = 1;
 	}
-	else if(pick()->aerial && !freeze){ 
+	else if(pick()->aerial && !freeze) {
 		if(hover > 0 && deltaY - 6 < 0) g.y = -deltaY;
 		addVector(g);
 	}
@@ -298,20 +298,20 @@ void player::checkBlocking()
 void player::checkCorners(int floor, int left, int right)
 {
 	/*Offset variables. I could do these calculations on the fly, but it's easier this way.
-	Essentially, this represents the offset between the sprite and the collision box, since
-	even though we're *checking* collision, we're still *moving* spr*/
+	   Essentially, this represents the offset between the sprite and the collision box, since
+	   even though we're *checking* collision, we're still *moving* spr*/
 	int lOffset = posX - collision.x;
 	int rOffset = posX - (collision.x + collision.w);
 
 	/*Floor, or "Bottom corner"*/
 
-	if (collision.y < floor){
-		if(elasticY){
+	if (collision.y < floor) {
+		if(elasticY) {
 			deltaY = -deltaY;
 			elasticY = false;
 		} else if (slide) {
 			deltaY = 0;
-			if(cMove == pick()->untech){ 
+			if(cMove == pick()->untech) {
 				if(deltaX < 0) deltaX++;
 				else if(deltaX > 0) deltaX--;
 				pick()->aerial = 1;
@@ -320,7 +320,7 @@ void player::checkCorners(int floor, int left, int right)
 				slide = 0;
 			}
 		} else {
-			if(pick()->aerial == 1){
+			if(pick()->aerial == 1) {
 				land();
 				updateRects();
 				deltaX = 0;
@@ -333,43 +333,43 @@ void player::checkCorners(int floor, int left, int right)
 
 	/*Walls, or "Left and Right" corners
 
-	This not only keeps the characters within the stage boundaries, but flags them as "in the corner"
-	so we can specialcase collision checks for when one player is in the corner.*/
+	   This not only keeps the characters within the stage boundaries, but flags them as "in the corner"
+	   so we can specialcase collision checks for when one player is in the corner.*/
 
-	if(collision.x <= left){
-		if(elasticX){
+	if(collision.x <= left) {
+		if(elasticX) {
 			if(deltaX < 0) deltaX = -deltaX;
 			elasticX = false;
 		}
-		if(collision.x <= 50){ 
+		if(collision.x <= 50) {
 			if(facing == 1) lCorner = 1;
 			if (stick) {
-				if(cMove == pick()->untech){
+				if(cMove == pick()->untech) {
 					deltaX = 0;
 					deltaY = 0;
 					momentumComplexity = 0;
 				} else stick = 0;
 			}
 		}
-		if(collision.x < left) 
+		if(collision.x < left)
 			posX = left + lOffset;
 	} else lCorner = 0;
-	if(collision.x + collision.w >= right){
-		if(elasticX){
-			if(deltaX > 0) deltaX = -deltaX; 
+	if(collision.x + collision.w >= right) {
+		if(elasticX) {
+			if(deltaX > 0) deltaX = -deltaX;
 			elasticX = false;
-		} 
-		if(collision.x + collision.w >= 3150){ 
+		}
+		if(collision.x + collision.w >= 3150) {
 			if(facing == -1) rCorner = 1;
 			if (stick) {
-				if(cMove == pick()->untech){
+				if(cMove == pick()->untech) {
 					deltaX = 0;
 					deltaY = 0;
 					momentumComplexity = 0;
 				} else stick = 0;
 			}
 		}
-		if(collision.x + collision.w > right){
+		if(collision.x + collision.w > right) {
 			posX = right + rOffset;
 		}
 	} else rCorner = 0;
@@ -378,7 +378,7 @@ void player::checkCorners(int floor, int left, int right)
 
 void player::land()
 {
-	for(int i = 0; i < momentumComplexity; i++){
+	for(int i = 0; i < momentumComplexity; i++) {
 		if(momentum[i].y > 0) removeVector(i);
 	}
 	pick()->land(cMove, currentFrame, connectFlag, hitFlag);
@@ -390,7 +390,7 @@ void instance::step()
 	if(posX > 3300 || posX < -100) dead = true;
 	pick()->step(cMove, currentFrame, freeze);
 
-	if(cMove && currentFrame >= cMove->frames){
+	if(cMove && currentFrame >= cMove->frames) {
 		cMove = cMove->next;
 		currentFrame = 0;
 		connectFlag = 0;
@@ -403,16 +403,16 @@ void player::checkFacing(player * other){
 	midpoint = collision.x + collision.w/2;
 	comparison = other->collision.x + other->collision.w/2;
 
-	if(other->posX < posX) comparison += collision.w % 2; 
+	if(other->posX < posX) comparison += collision.w % 2;
 	else midpoint += collision.w % 2;
 
 	if (lCorner) facing = 1;
 	else if (rCorner) facing = -1;
-	else if (midpoint < comparison){
+	else if (midpoint < comparison) {
 		if(facing == -1) posX += collision.x - (posX + (posX - collision.x - collision.w));
 		facing = 1;
 	}
-	else if (midpoint > comparison){
+	else if (midpoint > comparison) {
 		if(facing == 1) posX += (collision.w + collision.x) - posX*2 + collision.x;
 		facing = -1;
 	}
@@ -432,7 +432,7 @@ void instance::pushInput(bool axis[4])
 	int temp = 5 + axis[0]*3 - axis[1]*3 - axis[2]*facing + axis[3]*facing;
 	inputBuffer[0] = temp;
 
-	for(int i = 29; i > 0; i--){
+	for(int i = 29; i > 0; i--) {
 		inputBuffer[i] = inputBuffer[i-1];
 	}
 }
@@ -444,11 +444,11 @@ void instance::getMove(int down[5], bool up[5], SDL_Rect &p, bool dryrun)
 	save = cMove;
 	int n = currentFrame;
 	pick()->prepHooks(freeze, dummyMove, bMove, sMove, inputBuffer, down, up, p, currentFrame, connectFlag, hitFlag, dryrun);
-	if(dummyMove){
+	if(dummyMove) {
 		if(dummyMove->throwinvuln == 1 && throwInvuln <= 0) throwInvuln = 1;
 		if(dummyMove->throwinvuln == 2) throwInvuln = 6;
 	}
-	if(!dryrun){ 
+	if(!dryrun) {
 		cMove = dummyMove;
 		if(currentFrame != n || cMove != save) cMove->playSound(ID);
 	}
@@ -459,22 +459,22 @@ void instance::pullVolition()
 {
 	int top = 0;
 	for(int i = 0; i < momentumComplexity; i++)
-		if(momentum[i].h > 0 && momentum[i].h > top){ 
+		if(momentum[i].h > 0 && momentum[i].h > top) {
 			top = (short)momentum[i].h;
 		}
-	if(cMove->stop){
-		if(currentFrame == 0){ 
+	if(cMove->stop) {
+		if(currentFrame == 0) {
 			deltaX = 0; deltaY = 0;
 			if(cMove->stop == 2)
 				momentumComplexity = 0;
 		}
 	}
-	if(freeze < 1){
-		if(currentFrame < cMove->frames){
+	if(freeze < 1) {
+		if(currentFrame < cMove->frames) {
 			SDL_Rect * temp = cMove->delta[currentFrame];
-			for(int i = 0; i < cMove->deltaComplexity[currentFrame]; i++){
-				if(temp[i].x || temp[i].y || temp[i].h){
-					if(abs((short)temp[i].h) >= top || top == 0){
+			for(int i = 0; i < cMove->deltaComplexity[currentFrame]; i++) {
+				if(temp[i].x || temp[i].y || temp[i].h) {
+					if(abs((short)temp[i].h) >= top || top == 0) {
 						addVector(temp[i]);
 					}
 				}
@@ -488,7 +488,7 @@ void instance::addVector(SDL_Rect &v)
 	int i;
 	SDL_Rect * temp;
 	temp = new SDL_Rect[momentumComplexity+1];
-	for(i = 0; i < momentumComplexity; i++){
+	for(i = 0; i < momentumComplexity; i++) {
 		temp[i].x = momentum[i].x;
 		temp[i].y = momentum[i].y;
 		temp[i].w = momentum[i].w;
@@ -506,7 +506,7 @@ void instance::addVector(SDL_Rect &v)
 void instance::removeVector(int n)
 {
 	if(momentumComplexity < 0 || !momentum) return;
-	for(int i = n; i < momentumComplexity-1; i++){
+	for(int i = n; i < momentumComplexity-1; i++) {
 		momentum[i].x = momentum[i+1].x;
 		momentum[i].y = momentum[i+1].y;
 		momentum[i].w = momentum[i+1].w;
@@ -518,10 +518,10 @@ void instance::removeVector(int n)
 void player::readEvent(SDL_Event & event, bool *& sAxis, int *& posEdge, bool *& negEdge)
 {
 //	printf("Player %i read event of type %i:\n", ID, event.type);
-	switch(event.type){
+	switch(event.type) {
 	case SDL_JOYAXISMOTION:
-		for(int i = 0; i < 4; i++){
-			if(input[i].type == SDL_JOYAXISMOTION){
+		for(int i = 0; i < 4; i++) {
+			if(input[i].type == SDL_JOYAXISMOTION) {
 				if(event.jaxis.which == input[i].jaxis.which && event.jaxis.axis == input[i].jaxis.axis && event.jaxis.value == input[i].jaxis.value)
 					sAxis[i] = 1;
 				if(event.jaxis.which == input[i].jaxis.which && event.jaxis.axis == input[i].jaxis.axis && abs(event.jaxis.value) < abs(input[i].jaxis.value - 100))
@@ -534,7 +534,7 @@ void player::readEvent(SDL_Event & event, bool *& sAxis, int *& posEdge, bool *&
 			if(event.jbutton.which == input[i].jbutton.which && event.jbutton.button == input[i].jbutton.button && input[i].type == SDL_JOYBUTTONDOWN)
 				sAxis[i] = 1;
 		}
-		for(int i = 4; i < 10; i++){
+		for(int i = 4; i < 10; i++) {
 			if(event.jbutton.which == input[i].jbutton.which && event.jbutton.button == input[i].jbutton.button && input[i].type == SDL_JOYBUTTONDOWN)
 				posEdge[i-4] = 1;
 		}
@@ -544,8 +544,8 @@ void player::readEvent(SDL_Event & event, bool *& sAxis, int *& posEdge, bool *&
 			if(event.jbutton.which == input[i].jbutton.which && event.jbutton.button == input[i].jbutton.button && input[i].type == SDL_JOYBUTTONDOWN)
 				sAxis[i] = 0;
 		}
-		for(int i = 4; i < 10; i++){
-			if(event.jbutton.which == input[i].jbutton.which && event.jbutton.button == input[i].jbutton.button && input[i].type == SDL_JOYBUTTONDOWN){
+		for(int i = 4; i < 10; i++) {
+			if(event.jbutton.which == input[i].jbutton.which && event.jbutton.button == input[i].jbutton.button && input[i].type == SDL_JOYBUTTONDOWN) {
 				negEdge[i-4] = 1;
 				posEdge[i-4] = 0;
 			}
@@ -553,7 +553,7 @@ void player::readEvent(SDL_Event & event, bool *& sAxis, int *& posEdge, bool *&
 		break;
 	case SDL_KEYDOWN:
 		for(int i = 0; i < 4; i++) {
-			if(event.key.keysym.sym == input[i].key.keysym.sym && input[i].type == SDL_KEYDOWN) 
+			if(event.key.keysym.sym == input[i].key.keysym.sym && input[i].type == SDL_KEYDOWN)
 				sAxis[i] = 1;
 		}
 		for(int i = 4; i < 10; i++) {
@@ -562,12 +562,12 @@ void player::readEvent(SDL_Event & event, bool *& sAxis, int *& posEdge, bool *&
 		}
 		break;
 	case SDL_KEYUP:
-		for(int i = 0; i < 4; i++){
+		for(int i = 0; i < 4; i++) {
 			if(event.key.keysym.sym == input[i].key.keysym.sym && input[i].type == SDL_KEYDOWN)
 				sAxis[i] = 0;
 		}
-		for(int i = 4; i < 10; i++){
-			if(event.key.keysym.sym == input[i].key.keysym.sym && input[i].type == SDL_KEYDOWN){
+		for(int i = 4; i < 10; i++) {
+			if(event.key.keysym.sym == input[i].key.keysym.sym && input[i].type == SDL_KEYDOWN) {
 				negEdge[i-4] = 1;
 				posEdge[i-4] = 0;
 			}
@@ -603,9 +603,9 @@ int player::takeHit(int combo, hStat & s)
 {
 	SDL_Rect v = {0, 0, 1, 0};
 	action * temp = NULL;
-	if(s.damage > 0){
+	if(s.damage > 0) {
 		if(combo >= s.damage) s.damage = 1;
-		else s.damage -= combo; 
+		else s.damage -= combo;
 	}
 	s.untech -= combo;
 	int f;
@@ -613,10 +613,10 @@ int player::takeHit(int combo, hStat & s)
 	f = instance::takeHit(combo, s);
 	if(s.ghostHit) freeze = 0;
 	else freeze = f;
-	if(particleType != 1){ 
+	if(particleType != 1) {
 		temp = cMove->blockSuccess();
 	}
-	if(temp && temp != cMove){
+	if(temp && temp != cMove) {
 		combo = 0;
 		bMove = temp;
 		freeze = 0;
@@ -639,7 +639,7 @@ int player::takeHit(int combo, hStat & s)
 		if(pick()->aerial && s.stick) stick = true;
 		else stick = false;
 	}
-	if(cMove == pick()->die){ 
+	if(cMove == pick()->die) {
 		bMove = NULL;
 		currentFrame = 0;
 		connectFlag = 0;
@@ -653,7 +653,7 @@ int player::takeHit(int combo, hStat & s)
 
 void instance::invertVectors(int operation)
 {
-	switch (operation){
+	switch (operation) {
 	case 1:
 		for(int i = 0; i < momentumComplexity; i++)
 			momentum[i].x = -momentum[i].x;
@@ -663,7 +663,7 @@ void instance::invertVectors(int operation)
 			momentum[i].y = -momentum[i].y;
 		break;
 	case 3:
-		for(int i = 0; i < momentumComplexity; i++){
+		for(int i = 0; i < momentumComplexity; i++) {
 			momentum[i].x = -momentum[i].x;
 			momentum[i].y = -momentum[i].y;
 		}
@@ -698,5 +698,7 @@ void player::getThrown(action *toss, int x, int y)
 	updateRects();
 }
 
-instance::~instance(){}
-player::~player(){}
+instance::~instance(){
+}
+player::~player(){
+}

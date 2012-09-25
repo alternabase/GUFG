@@ -1,0 +1,9 @@
+understand everything, or strive to.
+
+fix how badly it's broken (by me) right now.
+make it build with a nice directory setup.
+possibly using scons? try to get it to build for a windows vm
+
+
+look over the comments and variablenames and improve them.
+documentation generation e.g. doxygen

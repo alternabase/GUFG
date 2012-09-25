@@ -1,23 +1,23 @@
 /*Key Test for GUFG
- *This tiny program is intended to do some of the initial SDL engine testing for
- *Project: Ground Up Fighting Game.
+ * This tiny program is intended to do some of the initial SDL engine testing for
+ * Project: Ground Up Fighting Game.
  *
- *Written by Alex Kelly in 2012
- *Under the MIT OSI license
- *For detailed licensing information, see the COPYING file in this directory.
+ * Written by Alex Kelly in 2012
+ * Under the MIT OSI license
+ * For detailed licensing information, see the COPYING file in this directory.
  */
 
-#include "interface.h"
 #include "compat.h"
-#include <unistd.h>
-#include <stdlib.h>
+#include "engine/interface.h"
 #include <SDL/SDL_opengl.h>
+#include <stdlib.h>
+#include <unistd.h>
 using namespace internal;
 
 int main(int argc, char* argv[])
 {
 	/*Spawn the interface*/
-	typedef chrono::duration<int,micro> microsecs_t ;
+	typedef chrono::duration<int,micro> microsecs_t;
 	chrono::high_resolution_clock::time_point frameStart;
 	chrono::high_resolution_clock::time_point frameEnd;
 	interface game;
@@ -27,7 +27,7 @@ int main(int argc, char* argv[])
 	if(rounds > 0 && rounds < 10) game.numRounds = rounds;
 
 	/*Loop of everything*/
-	while (!game.gameover){
+	while (!game.gameover) {
 		frameStart = chrono::high_resolution_clock::now();
 		game.readInput();
 		game.resolve();
@@ -39,6 +39,6 @@ int main(int argc, char* argv[])
 			dur = duration.count();
 		} while(dur > 0);
 	}
-    return 0;
+	return 0;
 }
 

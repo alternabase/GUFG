@@ -17,8 +17,8 @@ negNormal::negNormal(const char * n)
 
 bool negNormal::activate(int pos[5], bool neg[5], int pattern, int t, int f, int resource[], SDL_Rect &p)
 {
-	for(int i = 0; i < 5; i++){
-		if(pattern & (1 << i)){
+	for(int i = 0; i < 5; i++) {
+		if(pattern & (1 << i)) {
 			if(!neg[i]) return 0;
 		}
 	}
@@ -29,8 +29,8 @@ bool negNormal::activate(int pos[5], bool neg[5], int pattern, int t, int f, int
 
 bool special::activate(int pos[5], bool neg[5], int pattern, int t, int f, int resource[], SDL_Rect &p)
 {
-	for(int i = 0; i < 5; i++){
-		if(pattern & (1 << i)){
+	for(int i = 0; i < 5; i++) {
+		if(pattern & (1 << i)) {
 			if(pos[i] != 1 && !neg[i]) return 0;
 		}
 	}
@@ -47,9 +47,9 @@ super::super(const char * n)
 bool mash::activate(int pos[5], bool neg[5], int pattern, int t, int f, int resource[], SDL_Rect &p)
 {
 	int go = 0;
-	if(action::activate(pos, neg, pattern, t, f, resource, p)){
-		for(int i = 0; i < 5; i++){
-			if(pos[i] >= minHold){
+	if(action::activate(pos, neg, pattern, t, f, resource, p)) {
+		for(int i = 0; i < 5; i++) {
+			if(pos[i] >= minHold) {
 				if(pos[i] <= maxHold || !maxHold) go++;
 			}
 		}
@@ -77,9 +77,9 @@ bool mash::setParameter(char * buffer)
 
 	char * token = strtok(buffer, "\t: \n-");
 
-	if(!strcmp("Buttons", token)){
+	if(!strcmp("Buttons", token)) {
 		token = strtok(NULL, "\t: \n-");
-		buttons = atoi(token); 
+		buttons = atoi(token);
 		return 1;
 	} else return action::setParameter(savedBuffer);
 }
@@ -91,12 +91,12 @@ bool super::setParameter(char * buffer)
 
 	char * token = strtok(buffer, "\t: \n-");
 
-	if(!strcmp("SuperFreeze", token)){
+	if(!strcmp("SuperFreeze", token)) {
 		token = strtok(NULL, "\t: \n-");
-		freezeFrame = atoi(token); 
+		freezeFrame = atoi(token);
 
 		token = strtok(NULL, "\t: \n-");
-		freezeLength = atoi(token); 
+		freezeLength = atoi(token);
 		freezeLength = freezeLength - freezeFrame;
 		return 1;
 	} else return action::setParameter(savedBuffer);
@@ -114,7 +114,7 @@ bool airSuper::setParameter(char * buffer)
 
 int werf::arbitraryPoll(int n, int f)
 {
-	switch (n){
+	switch (n) {
 	case 28:
 		if(f == 0) return 1;
 		break;
@@ -149,12 +149,12 @@ bool werf::setParameter(char * buffer)
 
 	char * token = strtok(buffer, "\t: \n-");
 
-	if (!strcmp("Position", token)){
+	if (!strcmp("Position", token)) {
 		token = strtok(NULL, "\t: \n");
-		startPosX = atoi(token); 
+		startPosX = atoi(token);
 
 		token = strtok(NULL, "\t: \n");
-		startPosY = atoi(token); 
+		startPosY = atoi(token);
 		return 1;
 	} else return action::setParameter(savedBuffer);
 }

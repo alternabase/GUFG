@@ -33,11 +33,11 @@ void projectile::init(action *& cMove)
 
 void projectile::processMove(action * m)
 {
-	if(neutral == NULL){ 
+	if(neutral == NULL) {
 		neutral = m;
 	}
 	avatar::processMove(m);
-	if(m->dies){ 
+	if(m->dies) {
 		m->feed(die, 2, m->hits-1);
 	}
 }
@@ -71,8 +71,8 @@ void summon::zero()
 
 bool projectile::death(action *& cMove, int f)
 {
-	if(cMove == die){
-		if(f == cMove->frames - 1){
+	if(cMove == die) {
+		if(f == cMove->frames - 1) {
 			return true;
 		}
 	}
@@ -86,18 +86,18 @@ bool summon::setParameter(char * buffer)
 
 	char * token = strtok(buffer, "\t: \n-");
 
-	if(!strcmp("SpawnPosition", token)){
+	if(!strcmp("SpawnPosition", token)) {
 		token = strtok(NULL, "\t: \n");
 		spawnPosX = atoi(token);
 
 		token = strtok(NULL, "\t: \n");
 		spawnPosY = atoi(token);
 		return 1;
-	} else if(!strcmp("SpawnsOn", token)){
+	} else if(!strcmp("SpawnsOn", token)) {
 		token = strtok(NULL, "\t: \n");
 		spawnFrame = atoi(token);
 		return 1;
-	} else if(!strcmp("Payload", token)){
+	} else if(!strcmp("Payload", token)) {
 		token = strtok(NULL, "\t: \n");
 		tempPayload = new char[strlen(token)+1];
 		strcpy(tempPayload, token);
@@ -107,9 +107,9 @@ bool summon::setParameter(char * buffer)
 
 int summon::arbitraryPoll(int q, int f)
 {
-	switch(q){
+	switch(q) {
 	case 50:
-		if(f == spawnFrame){ 
+		if(f == spawnFrame) {
 			return 1;
 		}
 		else break;

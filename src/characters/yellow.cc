@@ -21,9 +21,9 @@ void yellow::init(action *& cMove)
 void yellow::tick()
 {
 	character::tick();
-	if(meter[3] > 0){ 
+	if(meter[3] > 0) {
 		meter[3]--;
-		if(meter[3] == 0){ 
+		if(meter[3] == 0) {
 			meter[3] = -360;
 		}
 	}
@@ -47,7 +47,7 @@ action * yellow::createMove(char * fullName)
 	sprintf(actionName, "%s/%s", name, token);
 
 	action * m;
-	switch(type[0]){
+	switch(type[0]) {
 	case '$':
 		m = new flashStep(actionName);
 		break;
@@ -66,16 +66,16 @@ void yellow::drawMeters(int ID, float scalingFactor, int hidden)
 	int color;
 	character::drawMeters(ID, scalingFactor, hidden);
 	SDL_Rect c1;
-	if(meter[3] >= 0){
-		c1.w = meter[3]/3*2; 
+	if(meter[3] >= 0) {
+		c1.w = meter[3]/3*2;
 		color = 255;
 	} else {
 		c1.w = 360 + (meter[3]);
 		color = 0;
 	}
-	if(ID == 1){
-		c1.x = 220; 
-	} else { 
+	if(ID == 1) {
+		c1.x = 220;
+	} else {
 		c1.x = 1020 + (360 - c1.w);
 	}
 	c1.h = 10;
@@ -83,7 +83,7 @@ void yellow::drawMeters(int ID, float scalingFactor, int hidden)
 	glColor4f(1.0f, (float)color, 0.0f, 1.0f);
 	glRectf((GLfloat)(c1.x)*scalingFactor, (GLfloat)(c1.y)*scalingFactor, (GLfloat)(c1.x + c1.w)*scalingFactor, (GLfloat)(c1.y + c1.h)*scalingFactor);
 //	SDL_FillRect(screen, &c1, SDL_MapRGB(screen->format, 0, 0, color1));
-//	SDL_FillRect(screen, &c2, SDL_MapRGB(screen->format, color2, 0, color2)); 
+//	SDL_FillRect(screen, &c2, SDL_MapRGB(screen->format, color2, 0, color2));
 }
 
 int yellow::takeHit(action *& cMove, hStat & s, int b, int &f, int &c, int &h, int &p)
@@ -93,8 +93,10 @@ int yellow::takeHit(action *& cMove, hStat & s, int b, int &f, int &c, int &h, i
 	return x;
 }
 
-flashStep::flashStep() {}
-flashSummon::flashSummon() {}
+flashStep::flashStep() {
+}
+flashSummon::flashSummon() {
+}
 
 flashStep::flashStep(const char * n)
 {
@@ -113,9 +115,9 @@ bool flashStep::setParameter(char * buffer)
 
 	char * token = strtok(buffer, "\t: \n-");
 
-	if(!strcmp("FlashCost", token)){
+	if(!strcmp("FlashCost", token)) {
 		token = strtok(NULL, "\t: \n-");
-		flashMeterCost = atoi(token); 
+		flashMeterCost = atoi(token);
 		return 1;
 	} else return airMove::setParameter(savedBuffer);
 }
@@ -126,10 +128,10 @@ bool flashSummon::setParameter(char * buffer)
 	strcpy(savedBuffer, buffer);
 
 	char * token = strtok(buffer, "\t: \n-");
-	
-	if(!strcmp("FlashGain", token)){
+
+	if(!strcmp("FlashGain", token)) {
 		token = strtok(NULL, "\t: \n-");
-		flashMeterGain = atoi(token); 
+		flashMeterGain = atoi(token);
 		return 1;
 	} else return action::setParameter(savedBuffer);
 }
@@ -163,7 +165,7 @@ void flashStep::execute(action * last, int *& resource)
 
 void flashSummon::step(int *& resource, int &f)
 {
-	if(uFlag){
+	if(uFlag) {
 		if(f == frames - 1) resource[3] = 0;
 	} else resource[3] += flashMeterGain / frames + 1;
 	if(resource[3] > 540) resource[3] = 540;

@@ -1,5 +1,5 @@
 /*Some SDL-related utility functions written by Ashley Fisher, c. 2012, for project "picoclash".
- *Used in project "GUFG" with her permission.
+ * Used in project "GUFG" with her permission.
  */
 
 #include <SDL/SDL.h>
@@ -97,8 +97,8 @@ void aux::bilinear_scale(SDL_Surface* source, SDL_Surface* destination) {
 				Uint32 pixel = source_pixels[(int)((py-1)*w1 + px)];
 
 				red   += (pixel & format->Rmask) >> format->Rshift;
-				green += (pixel & format->Gmask) >> format->Gshift; 
-				blue  += (pixel & format->Bmask) >> format->Bshift; 
+				green += (pixel & format->Gmask) >> format->Gshift;
+				blue  += (pixel & format->Bmask) >> format->Bshift;
 			}
 
 			if (py < h1-1) {
@@ -107,8 +107,8 @@ void aux::bilinear_scale(SDL_Surface* source, SDL_Surface* destination) {
 				Uint32 pixel =  source_pixels[(int)((py+1)*w1 + px)];
 
 				red   += (pixel & format->Rmask) >> format->Rshift;
-				green += (pixel & format->Gmask) >> format->Gshift; 
-				blue  += (pixel & format->Bmask) >> format->Bshift; 
+				green += (pixel & format->Gmask) >> format->Gshift;
+				blue  += (pixel & format->Bmask) >> format->Bshift;
 			}
 
 			if (px > 0) {
@@ -117,8 +117,8 @@ void aux::bilinear_scale(SDL_Surface* source, SDL_Surface* destination) {
 				Uint32 pixel =  source_pixels[(int)(py*w1 + (px-1))];
 
 				red   += (pixel & format->Rmask) >> format->Rshift;
-				green += (pixel & format->Gmask) >> format->Gshift; 
-				blue  += (pixel & format->Bmask) >> format->Bshift; 
+				green += (pixel & format->Gmask) >> format->Gshift;
+				blue  += (pixel & format->Bmask) >> format->Bshift;
 			}
 
 			if (px < w1-1) {
@@ -127,11 +127,11 @@ void aux::bilinear_scale(SDL_Surface* source, SDL_Surface* destination) {
 				Uint32 pixel = source_pixels[(int)(py*w1 + (px+1))];
 
 				red   += (pixel & format->Rmask) >> format->Rshift;
-				green += (pixel & format->Gmask) >> format->Gshift; 
-				blue  += (pixel & format->Bmask) >> format->Bshift; 
+				green += (pixel & format->Gmask) >> format->Gshift;
+				blue  += (pixel & format->Bmask) >> format->Bshift;
 			}
 
-			destination_pixels[i*w2 + j] = SDL_MapRGB(format, red / num_nbrs, green / num_nbrs, blue / num_nbrs); 
+			destination_pixels[i*w2 + j] = SDL_MapRGB(format, red / num_nbrs, green / num_nbrs, blue / num_nbrs);
 		}
 	}
 
@@ -157,10 +157,10 @@ SDL_Surface* aux::scale2x(SDL_Surface* source) {
 
 	for (int i = 0; i < h1; i++) {
 		for (int j = 0; j < w1; j++) {
-			Uint32 a = i > 0      ? (Uint32)source_pixels[(i-1) * w1 + j] : 0; 
-			Uint32 b = j < w1 - 1 ? (Uint32)source_pixels[i * w1 + (j+1)] : 0; 
-			Uint32 c = j > 0      ? (Uint32)source_pixels[i * w1 + (j-1)] : 0; 
-			Uint32 d = i < h1 - 1 ? (Uint32)source_pixels[(i+1) * w1 + j] : 0; 
+			Uint32 a = i > 0      ? (Uint32)source_pixels[(i-1) * w1 + j] : 0;
+			Uint32 b = j < w1 - 1 ? (Uint32)source_pixels[i * w1 + (j+1)] : 0;
+			Uint32 c = j > 0      ? (Uint32)source_pixels[i * w1 + (j-1)] : 0;
+			Uint32 d = i < h1 - 1 ? (Uint32)source_pixels[(i+1) * w1 + j] : 0;
 
 			ret_pixels[(i*2) * w2 + (j*2)]         = (Uint32)source_pixels[i * w1 +j];
 			ret_pixels[(i*2) * w2 + (j*2 + 1)]     = (Uint32)source_pixels[i * w1 +j];
@@ -230,19 +230,19 @@ bool aux::checkCollision(SDL_Rect a, SDL_Rect b)
 int aux::defineRectArray(char * definition, SDL_Rect *& array)
 {
 	int complexity = 1;
-	for(unsigned int i = 0; i < strlen(definition); i++){
+	for(unsigned int i = 0; i < strlen(definition); i++) {
 		if(definition[i] == '\t') complexity++;
 	}
 	array = new SDL_Rect[complexity];
 	char * coordinate[complexity*4];
 	coordinate[0] = strtok(definition, ",\n\t ");
-	for(int i = 1; i < complexity*4; i++){
+	for(int i = 1; i < complexity*4; i++) {
 		coordinate[i] = strtok(NULL, ", \n\t"); i++;
 		coordinate[i] = strtok(NULL, ", \n\t"); i++;
 		coordinate[i] = strtok(NULL, ", \n\t"); i++;
 		coordinate[i] = strtok(NULL, ", \n\t");
 	}
-	for(int i = 0; i < complexity*4; i++){
+	for(int i = 0; i < complexity*4; i++) {
 		array[i/4].x = atoi(coordinate[i]); i++;
 		array[i/4].y = atoi(coordinate[i]); i++;
 		array[i/4].w = atoi(coordinate[i]); i++;
@@ -266,7 +266,7 @@ GLuint aux::surface_to_texture(SDL_Surface * source)
 	glBindTexture(GL_TEXTURE_2D, texture);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	
+
 	glTexImage2D(GL_TEXTURE_2D, 0, nColors, source->w, source->h, 0, texFormat, GL_UNSIGNED_BYTE, source->pixels);
 	return texture;
 }

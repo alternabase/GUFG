@@ -19,9 +19,9 @@ action::~action()
 {
 	if(!this) return;
 /*	for(int i = 0; i < frames; i++){
-		if(sprite[i] != NULL) SDL_FreeSurface(sprite[i]);
-		if(fSprite[i] != NULL) SDL_FreeSurface(fSprite[i]);
-	}*/
+                if(sprite[i] != NULL) SDL_FreeSurface(sprite[i]);
+                if(fSprite[i] != NULL) SDL_FreeSurface(fSprite[i]);
+        }*/
 	if(collision) delete [] collision;
 	if(hitbox) delete [] hitbox;
 	if(hitreg) delete [] hitreg;
@@ -102,18 +102,18 @@ void action::build(const char * n)
 
 	int currHit = 0;
 
-	for(int i = 0; i < frames; i++){
-		while(read.get() != '$'); read.ignore(2);
+	for(int i = 0; i < frames; i++) {
+		while(read.get() != '$') ; read.ignore(2);
 		read >> collision[i].x >> collision[i].y >> collision[i].w >> collision[i].h;
-		while(read.get() != '$'); read.ignore(2);
+		while(read.get() != '$') ; read.ignore(2);
 		read.get(buffer, 100, '\n');
 		regComplexity[i] = aux::defineRectArray(buffer, hitreg[i]);
-		while(read.get() != '$'); read.ignore(2);
+		while(read.get() != '$') ; read.ignore(2);
 		read.get(buffer, 100, '\n');
 		deltaComplexity[i] = aux::defineRectArray(buffer, delta[i]);
-		if(hits > 0 && currHit < hits){
-			if(i > totalStartup[currHit] && i <= totalStartup[currHit]+active[currHit]){
-				while(read.get() != '$'); read.ignore(2);
+		if(hits > 0 && currHit < hits) {
+			if(i > totalStartup[currHit] && i <= totalStartup[currHit]+active[currHit]) {
+				while(read.get() != '$') ; read.ignore(2);
 				read.get(buffer, 100, '\n');
 				hitComplexity[i] = aux::defineRectArray(buffer, hitbox[i]);
 				if(i == totalStartup[currHit]+active[currHit]) currHit++;
@@ -134,10 +134,10 @@ void action::build(const char * n)
 	width = new int[frames];
 	height = new int[frames];
 	sprite = new GLuint[frames];
-	for(int i = 0; i < frames; i++){
+	for(int i = 0; i < frames; i++) {
 		sprintf(fname, "%s#%i.png", n, i);
 		temp = aux::load_image(fname);
-		if(!temp){
+		if(!temp) {
 			width[i] = 0;
 			height[i] = 0;
 			sprite[i] = 0;
@@ -157,7 +157,7 @@ bool action::setParameter(char * buffer)
 	strcpy(savedBuffer, buffer);
 	char* token = strtok(buffer, "\t:+ \n");
 
-	if(!strcmp("Name", token)){
+	if(!strcmp("Name", token)) {
 		token = strtok(NULL, "\t:\n");
 		name = new char[strlen(token)+1];
 		sprintf(name, "%s", token);
@@ -168,12 +168,12 @@ bool action::setParameter(char * buffer)
 		token = strtok(NULL, "\t: \n");
 		activation = atoi(token);
 		return 1;
-	} else if(!strcmp("Proximity", token)){
+	} else if(!strcmp("Proximity", token)) {
 		token = strtok(NULL, "\t: \n");
-		xRequisite = atoi(token); 
+		xRequisite = atoi(token);
 
 		token = strtok(NULL, "\t: \n");
-		yRequisite = atoi(token); 
+		yRequisite = atoi(token);
 		return 1;
 	} else if (!strcmp("Hold", token)) {
 		token = strtok(NULL, "\t: \n-");
@@ -187,12 +187,12 @@ bool action::setParameter(char * buffer)
 	} else if (!strcmp("Hits", token)) {
 		token = strtok(NULL, "\t: \n");
 		hits = atoi(token);
-		if(hits > 0){
+		if(hits > 0) {
 			stats = new hStat[hits];
 			CHStats = new hStat[hits];
 			onConnect = new action*[hits];
 			tempOnConnect = new char*[hits];
-			for (int i = 0; i < hits; i++){
+			for (int i = 0; i < hits; i++) {
 				onConnect[i] = NULL;
 				tempOnConnect[i] = NULL;
 				stats[i].hitState.i = 0;
@@ -239,10 +239,10 @@ bool action::setParameter(char * buffer)
 		return 1;
 	} else if (!strcmp("Attempt", token)) {
 		token = strtok(NULL, "\t: \n-");
-		attemptStart = atoi(token); 
+		attemptStart = atoi(token);
 
 		token = strtok(NULL, "\t: \n-");
-		attemptEnd = atoi(token); 
+		attemptEnd = atoi(token);
 
 		token = strtok(NULL, "\t: \n");
 		tempAttempt = new char[strlen(token)+1];
@@ -279,7 +279,7 @@ bool action::setParameter(char * buffer)
 			active = NULL;
 		}
 
-		for(int i = 0; i < hits; i++){
+		for(int i = 0; i < hits; i++) {
 			token = strtok(NULL, "\t: \n");
 			startup = atoi(token);
 			countFrames += startup;
@@ -290,19 +290,19 @@ bool action::setParameter(char * buffer)
 		}
 		return 1;
 	} else if (!strcmp("State", token)) {
-		for(int i = 0; i < hits+1; i++){
+		for(int i = 0; i < hits+1; i++) {
 			token = strtok(NULL, "\t: \n");
 			state[i].i = atoi(token);
 		}
 		return 1;
 	} else if (!strcmp("HitAllows", token)) {
-		for(int i = 0; i < hits; i++){
+		for(int i = 0; i < hits; i++) {
 			token = strtok(NULL, "\t: \n");
 			stats[i].hitState.i = atoi(token);
 		}
 		return 1;
 	} else if (!strcmp("Damage", token)) {
-		for(int i = 0; i < hits; i++){
+		for(int i = 0; i < hits; i++) {
 			token = strtok(NULL, "\t: \n");
 			if(savedBuffer[0] == '+')
 				CHStats[i].damage = atoi(token);
@@ -310,21 +310,21 @@ bool action::setParameter(char * buffer)
 		}
 		return 1;
 	} else if (!strcmp("Chip", token)) {
-		for(int i = 0; i < hits; i++){
+		for(int i = 0; i < hits; i++) {
 			token = strtok(NULL, "\t: \n");
 			stats[i].chip = atoi(token);
 		}
 		return 1;
 	} else if (!strcmp("Push", token)) {
-		for(int i = 0; i < hits; i++){
+		for(int i = 0; i < hits; i++) {
 			token = strtok(NULL, "\t: \n");
-			if(savedBuffer[0] == '+') 
+			if(savedBuffer[0] == '+')
 				CHStats[i].push = atoi(token);
 			else stats[i].push = atoi(token);
 		}
 		return 1;
 	} else if (!strcmp("Lift", token)) {
-		for(int i = 0; i < hits; i++){
+		for(int i = 0; i < hits; i++) {
 			token = strtok(NULL, "\t: \n");
 			if(savedBuffer[0] == '+')
 				CHStats[i].lift = atoi(token);
@@ -332,7 +332,7 @@ bool action::setParameter(char * buffer)
 		}
 		return 1;
 	} else if (!strcmp("Float", token)) {
-		for(int i = 0; i < hits; i++){
+		for(int i = 0; i < hits; i++) {
 			token = strtok(NULL, "\t: \n");
 			if(savedBuffer[0] == '+')
 				CHStats[i].hover = atoi(token);
@@ -340,7 +340,7 @@ bool action::setParameter(char * buffer)
 		}
 		return 1;
 	} else if (!strcmp("Blowback", token)) {
-		for(int i = 0; i < hits; i++){
+		for(int i = 0; i < hits; i++) {
 			token = strtok(NULL, "\t: \n");
 			if(savedBuffer[0] == '+')
 				CHStats[i].blowback = atoi(token);
@@ -348,7 +348,7 @@ bool action::setParameter(char * buffer)
 		}
 		return 1;
 	} else if (!strcmp("Stun", token)) {
-		for(int i = 0; i < hits; i++){
+		for(int i = 0; i < hits; i++) {
 			token = strtok(NULL, "\t: \n");
 			if(savedBuffer[0] == '+')
 				CHStats[i].stun = atoi(token);
@@ -359,7 +359,7 @@ bool action::setParameter(char * buffer)
 		}
 		return 1;
 	} else if (!strcmp("Untech", token)) {
-		for(int i = 0; i < hits; i++){
+		for(int i = 0; i < hits; i++) {
 			token = strtok(NULL, "\t: \n");
 			if(savedBuffer[0] == '+')
 				CHStats[i].untech = atoi(token);
@@ -370,36 +370,36 @@ bool action::setParameter(char * buffer)
 		}
 		return 1;
 	} else if (!strcmp("Blockable", token)) {
-		for(int i = 0; i < hits; i++){
+		for(int i = 0; i < hits; i++) {
 			token = strtok(NULL, "\t: \n");
 			stats[i].blockMask.i = atoi(token);
 		}
 		return 1;
 	} else if (!strcmp("Gain", token)) {
-		for(int i = 0; i < hits+1; i++){
+		for(int i = 0; i < hits+1; i++) {
 			token = strtok(NULL, "\t: \n");
 			gain[i] = atoi(token);
 		}
 		return 1;
 	} else if (!strcmp("Autoguard", token)) {
 		token = strtok(NULL, "\t: \n-");
-		guardStart = atoi(token); 
+		guardStart = atoi(token);
 
 		token = strtok(NULL, "\t: \n-");
-		guardLength = atoi(token); 
+		guardLength = atoi(token);
 		guardLength = guardLength - guardStart;
 		return 1;
 	} else if (!strcmp("Armor", token)) {
 		token = strtok(NULL, "\t: \n-");
-		armorStart = atoi(token); 
+		armorStart = atoi(token);
 
 		token = strtok(NULL, "\t: \n-");
-		armorLength = atoi(token); 
+		armorLength = atoi(token);
 		armorLength = armorLength - armorStart;
 		return 1;
 	} else if (!strcmp("MaxArmor", token)) {
 		token = strtok(NULL, "\t: \n-");
-		armorHits = atoi(token); 
+		armorHits = atoi(token);
 		return 1;
 	} else return 0;
 }
@@ -410,8 +410,8 @@ void action::parseProperties(char * buffer, bool counter)
 	token = strtok(NULL, "\n");
 	/*Debug*/
 	int ch = 0;
-	for(unsigned int i = 0; i < strlen(token); i++){
-		switch(token[i]){
+	for(unsigned int i = 0; i < strlen(token); i++) {
+		switch(token[i]) {
 		case '^':
 			if(counter) CHStats[ch].launch = 1;
 			else stats[ch].launch = 1;
@@ -435,7 +435,7 @@ void action::parseProperties(char * buffer, bool counter)
 		case 's':
 			if(!counter) stop = 1;
 			break;
-		case 'S': 
+		case 'S':
 			if(!counter) stop = 2;
 			break;
 		case 'c':
@@ -481,8 +481,8 @@ bool action::window(int f)
 
 bool action::activate(int pos[5], bool neg[5], int pattern, int t, int f, int resource[], SDL_Rect &p)
 {
-	for(int i = 0; i < 5; i++){
-		if(pattern & (1 << i)){
+	for(int i = 0; i < 5; i++) {
+		if(pattern & (1 << i)) {
 			if(pos[i] < minHold) return 0;
 			if(maxHold && pos[i] > maxHold) return 0;
 		}
@@ -514,12 +514,12 @@ void action::pollRects(SDL_Rect &c, SDL_Rect* &r, int &rc, SDL_Rect* &b, int &hc
 	c.y = collision[f].y; c.h = collision[f].h;
 
 	SDL_Rect * tempreg = hitreg[f];
-	for(int i = 0; i < rc; i++){
+	for(int i = 0; i < rc; i++) {
 		r[i].x = tempreg[i].x; r[i].w = tempreg[i].w;
 		r[i].y = tempreg[i].y; r[i].h = tempreg[i].h;
 	}
 	SDL_Rect * temphit = hitbox[f];
-	for(int i = 0; i < hc; i++){
+	for(int i = 0; i < hc; i++) {
 		if(cFlag > calcCurrentHit(f)) {
 			b[i].x = 0; b[i].w = 0;
 			b[i].y = 0; b[i].h = 0;
@@ -540,7 +540,7 @@ void action::pollStats(hStat & s, int f, bool CH)
 	s.lift = stats[c].lift + CHStats[c].lift * CH;
 	s.untech = stats[c].untech + CHStats[c].untech * CH;
 	s.blowback = stats[c].blowback + CHStats[c].blowback * CH;
-	if(CH){
+	if(CH) {
 		s.launch = CHStats[c].launch;
 		s.hover = CHStats[c].hover;
 		s.wallBounce = CHStats[c].wallBounce;
@@ -564,13 +564,13 @@ bool action::cancel(action * x, int& c, int &h)
 {
 	cancelField r;
 	r.i = x->state[c].i;
-	if(h > 0 && h == c){ 
+	if(h > 0 && h == c) {
 		r.i = r.i + x->stats[h - 1].hitState.i;
 	}
 	if(x == NULL) return 1;
 	else{
-		if(allowed.i & r.i){
-			if(x == this){
+		if(allowed.i & r.i) {
+			if(x == this) {
 				if(c == 0) return 0;
 				else if(allowed.b.chain1) return 1;
 				else return 0;
@@ -583,7 +583,7 @@ bool action::cancel(action * x, int& c, int &h)
 
 void action::step(int *& resource, int &f)
 {
-	if(f == 0){
+	if(f == 0) {
 		if(resource[0] + gain[0] < 300) resource[0] += gain[0];
 		else resource[0] = 300;
 	}
@@ -593,9 +593,9 @@ void action::step(int *& resource, int &f)
 int action::calcCurrentHit(int frame)
 {
 	int b = 0;
-	for(int i = 0; i < hits; i++){
+	for(int i = 0; i < hits; i++) {
 		if(frame > totalStartup[i]) b = i;
-	} 
+	}
 	return b;
 }
 
@@ -604,7 +604,7 @@ action * action::connect(int *& resource, int &c, int f)
 	c = calcCurrentHit(f)+1;
 	if(resource[0] + gain[c] < 300) resource[0] += gain[c];
 	else resource[0] = 300;
-	if(onConnect[c-1] != NULL){
+	if(onConnect[c-1] != NULL) {
 		return onConnect[c-1];
 	}
 	else return NULL;
@@ -629,7 +629,7 @@ void action::execute(action * last, int *& resource)
 
 void action::feed(action * c, int code, int i)
 {
-	switch(code){
+	switch(code) {
 	case 0:
 		next = c;
 		if(tempNext) delete [] tempNext;
@@ -651,10 +651,10 @@ void action::feed(action * c, int code, int i)
 
 char * action::request(int code, int i)
 {
-	switch(code){
-	case 0: 
+	switch(code) {
+	case 0:
 		return tempNext;
-	case 2: 
+	case 2:
 		return tempOnConnect[i];
 	case 3:
 		return tempAttempt;
@@ -667,16 +667,16 @@ char * action::request(int code, int i)
 
 int action::takeHit(hStat & s, int b, int &f, int &c, int &h)
 {
-	if(s.blockMask.i & blockState.i && f > guardStart && f < guardStart + guardLength){
+	if(s.blockMask.i & blockState.i && f > guardStart && f < guardStart + guardLength) {
 		if(riposte != NULL) return -2;
 		else return 0;
 	}
-	else if (f > armorStart && f < armorStart + armorLength && (armorHits < 1 || armorHits < armorCounter)){
+	else if (f > armorStart && f < armorStart + armorLength && (armorHits < 1 || armorHits < armorCounter)) {
 		s.stun = 0;
 		armorCounter++;
 		return 1;
 	} else {
-		if(s.stun != 0){
+		if(s.stun != 0) {
 			f = 0;
 			c = 0;
 			h = 0;

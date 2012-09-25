@@ -3,6 +3,6 @@
 #include "(LAST CHARACTER).h"
 class name : public character {
 public:
-	name();
+name();
 };
 #endif

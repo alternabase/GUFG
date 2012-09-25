@@ -8,7 +8,7 @@ void hitstun::init(int n)
 
 void hitstun::step(int *& resource, int &f)
 {
-	if(counter <= 0){ 
+	if(counter <= 0) {
 		action::step(resource, f);
 	} else {
 		if(f < frames - 1) action::step(resource, f);
@@ -23,8 +23,8 @@ action * hitstun::blockSuccess(int st){
 
 int hitstun::takeHit(hStat& s, int b, int& f, int& c, int& h)
 {
-	if(s.blockMask.i & blockState.i){
-		switch (b){
+	if(s.blockMask.i & blockState.i) {
+		switch (b) {
 		case -2:
 			f = 0;
 			init(s.stun - 2 - s.stun/5);

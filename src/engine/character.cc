@@ -17,50 +17,50 @@ character::character(const char*)
 {
 /*	action * temp;
 
-	name = NULL;
+        name = NULL;
 
-	head = new actionTrie(new action("White/A"));
+        head = new actionTrie(new action("White/A"));
 
-	temp = new action("White/D");
-	head->insert(temp, 0);
-	airHead = new actionTrie(temp, 0);
-	
-	head->insert(new action("White/B"), 0);
-	neutral = new looping("White/NS");
-	crouch = new looping("White/NL");
-	head->insert(5, neutral);
-	head->insert(2, crouch);
-	head->insert(1, crouch);
-	head->insert(3, crouch);
+        temp = new action("White/D");
+        head->insert(temp, 0);
+        airHead = new actionTrie(temp, 0);
 
-	airNeutral = new airLooping("White/NS");
-	airNeutral->feed(neutral, 1, 0);
+        head->insert(new action("White/B"), 0);
+        neutral = new looping("White/NS");
+        crouch = new looping("White/NL");
+        head->insert(5, neutral);
+        head->insert(2, crouch);
+        head->insert(1, crouch);
+        head->insert(3, crouch);
 
-	head->insert(4, new looping("White/WQ"));
-	head->insert(6, new looping("White/W"));
+        airNeutral = new airLooping("White/NS");
+        airNeutral->feed(neutral, 1, 0);
 
-	reel = new hitstun("White/HS");
-	untech = new untechState("White/UT");
-	crouchReel = new hitstun("White/HL");
+        head->insert(4, new looping("White/WQ"));
+        head->insert(6, new looping("White/W"));
 
-	airBlock = new hitstun("White/BA");
-	standBlock = new hitstun("White/BH");
-	crouchBlock = new hitstun("White/BL");
+        reel = new hitstun("White/HS");
+        untech = new untechState("White/UT");
+        crouchReel = new hitstun("White/HL");
 
-	head->insert(8, new utility("White/JN"));
-	head->insert(7, new utility("White/JQ"));
-	head->insert(9, new utility("White/JF"));
-	
-	throwBreak = new utility("White/break");
+        airBlock = new hitstun("White/BA");
+        standBlock = new hitstun("White/BH");
+        crouchBlock = new hitstun("White/BL");
 
-	meter = new int[3];
-*/
+        head->insert(8, new utility("White/JN"));
+        head->insert(7, new utility("White/JQ"));
+        head->insert(9, new utility("White/JF"));
+
+        throwBreak = new utility("White/break");
+
+        meter = new int[3];
+ */
 }
 
 character::~character()
-	//Character destructor. Might not need this if we aren't working with any dynamic memory, but it might be worthwhile to have.
+//Character destructor. Might not need this if we aren't working with any dynamic memory, but it might be worthwhile to have.
 {
-	if(!dFlag){
+	if(!dFlag) {
 		if(head) delete head;
 		if(airHead) delete airHead;
 		delete neutral;
@@ -83,20 +83,20 @@ void avatar::prepHooks(int freeze, action *& cMove, action *& bMove, action *& s
 	if (cMove == NULL) neutralize(cMove);
 	t = hook(inputBuffer, 0, -1, meter, down, up, cMove, p, cFlag, hFlag);
 
-	if(t == NULL && cMove->window(f)){
+	if(t == NULL && cMove->window(f)) {
 		if(cMove->attempt->check(p, meter)) t = cMove->attempt;
 	}
 
-	if(t != NULL){
-		if(freeze > 0){
-			if(bMove == NULL){ 
+	if(t != NULL) {
+		if(freeze > 0) {
+			if(bMove == NULL) {
 				if(!dryrun) bMove = t;
 /*			} else if(sMove == NULL){
-				if(!dryrun) sMove = t;
-*/			}
+                                if(!dryrun) sMove = t;
+ */                     }
 		}
 		else {
-			if(!dryrun){ 
+			if(!dryrun) {
 				t->execute(cMove, meter);
 				f = 0;
 				cFlag = 0;
@@ -105,7 +105,7 @@ void avatar::prepHooks(int freeze, action *& cMove, action *& bMove, action *& s
 			cMove = t;
 		}
 	} else if (bMove != NULL && freeze <= 0) {
-		if(!dryrun){ 
+		if(!dryrun) {
 			bMove->execute(cMove, meter);
 			f = 0;
 			hFlag = 0;
@@ -114,9 +114,9 @@ void avatar::prepHooks(int freeze, action *& cMove, action *& bMove, action *& s
 		cMove = bMove;
 		if(!dryrun) bMove = NULL;
 	} else if (sMove != NULL && freeze <= 0) {
-		if(sMove->check(p, meter) && sMove->cancel(cMove, cFlag, hFlag)){
+		if(sMove->check(p, meter) && sMove->cancel(cMove, cFlag, hFlag)) {
 			cMove = sMove;
-			if(!dryrun){
+			if(!dryrun) {
 				sMove->execute(cMove, meter);
 				f = 0;
 				cFlag = 0;
@@ -175,13 +175,13 @@ void avatar::build(const char* directory, const char* file)
 
 	read.get(buffer, 50); read.ignore(100, '\n');
 
-	while(!read.eof()){
+	while(!read.eof()) {
 		commentFlag = 0;
 		read.get(buffer, 100, '\n'); read.ignore(100, '\n');
-		
+
 		if(buffer[0] == '#' || buffer[0] == '\0')
 			commentFlag = 1;
-		if(!commentFlag){
+		if(!commentFlag) {
 			strcpy(buffer2, buffer);
 
 			m = createMove(buffer);
@@ -200,11 +200,11 @@ void avatar::sortMove(action * m, char* buffer)
 	int q;
 	actionTrie * t = NULL;
 	token = strtok(buffer, " \t=>-&?@%$_!\n");
-	while (token){
+	while (token) {
 		token = NULL;
 		token = strtok(NULL, " \t=>-&?@%$_!\n");
 		if(token) {
-			switch (token[0]){
+			switch (token[0]) {
 			case 'h':
 				t = head;
 				break;
@@ -212,8 +212,8 @@ void avatar::sortMove(action * m, char* buffer)
 				break;
 			}
 			pattern = 0;
-			for(int i = strlen(token)-1; i > 0; i--){
-				switch(token[i]){
+			for(int i = strlen(token)-1; i > 0; i--) {
+				switch(token[i]) {
 				case 'A':
 				case 'B':
 				case 'C':
@@ -242,11 +242,11 @@ void character::sortMove(action * m, char* buffer)
 	int pattern;
 	actionTrie * t = NULL;
 	token = strtok(buffer, " \t=>-&?@%$_!\n");
-	while (token){
+	while (token) {
 		token = NULL;
 		token = strtok(NULL, " \t=>-&?@%$_!\n");
 		if(token) {
-			switch (token[0]){
+			switch (token[0]) {
 			case 'h':
 				t = head;
 				break;
@@ -257,8 +257,8 @@ void character::sortMove(action * m, char* buffer)
 				break;
 			}
 			pattern = 0;
-			for(int i = strlen(token)-1; i > 0; i--){
-				switch(token[i]){
+			for(int i = strlen(token)-1; i > 0; i--) {
+				switch(token[i]) {
 				case 'A':
 				case 'B':
 				case 'C':
@@ -330,7 +330,7 @@ void character::build(const char *directory, const char *file)
 	crouchBlock = new hitstun(buffer);
 
 	sprintf(buffer, "%s/BA", name);
-	airBlock = new hitstun(buffer);	
+	airBlock = new hitstun(buffer);
 
 	sprintf(buffer, "%s/break", name);
 	throwBreak = new utility(buffer);
@@ -356,11 +356,11 @@ void avatar::processMove(action * m)
 {
 	char* temp = NULL;
 	action* t = NULL;
-	for(int i = 0; i < 6; i++){
-		if(i == 2){
-			for(int j = 0; j < m->hits; j++){
+	for(int i = 0; i < 6; i++) {
+		if(i == 2) {
+			for(int j = 0; j < m->hits; j++) {
 				temp = m->request(i, j);
-				if(temp != NULL){ 
+				if(temp != NULL) {
 					t = createMove(temp);
 					m->feed(t, i, j);
 					processMove(t);
@@ -368,12 +368,12 @@ void avatar::processMove(action * m)
 			}
 		} else if (i == 4) {
 			temp = m->request(i, 0);
-			if(temp != NULL){
+			if(temp != NULL) {
 				m->generate(name, temp);
 			}
 		} else {
 			temp = m->request(i, 0);
-			if(temp != NULL){
+			if(temp != NULL) {
 				t = createMove(temp);
 				m->feed(t, i, 0);
 				processMove(t);
@@ -392,7 +392,7 @@ action * avatar::createMove(char * fullName)
 	sprintf(actionName, "%s/%s", name, token);
 
 	action * m;
-	switch(type[0]){
+	switch(type[0]) {
 	case '%':
 		if(type[1] == 'j') m = new airSpecial(actionName);
 		else m = new special(actionName);
@@ -407,7 +407,7 @@ action * avatar::createMove(char * fullName)
 		break;
 	case '!':
 //		if(type[1] == 'j') m = new airSuper(actionName);
-//		else 
+//		else
 		if(type[1] == 'j') m = new airSuper(actionName);
 		else m = new super(actionName);
 		break;
@@ -427,7 +427,7 @@ action * avatar::createMove(char * fullName)
 		break;
 	default:
 		m = new action(actionName);
-		break;	
+		break;
 	}
 	return m;
 }
@@ -440,7 +440,7 @@ instance * avatar::spawn(action * source)
 void avatar::connect(action *& cMove, action *& bMove, action *& sMove, hStat & s, int & c, int f)
 {
 	action * t = cMove->connect(meter, c, f);
-	if(t != NULL){
+	if(t != NULL) {
 		if(bMove != NULL) sMove = bMove;
 		bMove = t;
 	}
@@ -452,21 +452,21 @@ int character::checkBlocking(action *& cMove, int input[], int &connectFlag, int
 	bool success = false;
 	int ret = -1;
 	st = cMove->arbitraryPoll(1, 0);
-	switch(input[0]){
+	switch(input[0]) {
 	case 3:
 	case 6:
 	case 9:
-		for(int i = 1; i < 7; i++){
-			if(input[i] % 3 == 1){
-				for(int j = i+1; j < 8; j++){
-					if(input[j] % 3 == 2){
-						if(aerial){
+		for(int i = 1; i < 7; i++) {
+			if(input[i] % 3 == 1) {
+				for(int j = i+1; j < 8; j++) {
+					if(input[j] % 3 == 2) {
+						if(aerial) {
 							if(airBlock->cancel(cMove, connectFlag, hitFlag)) {
 								airBlock->init(st);
 								cMove = airBlock;
 							}
 						} else {
-							if(input[0] > 3){ 
+							if(input[0] > 3) {
 								if(standBlock->cancel(cMove, connectFlag, hitFlag)) {
 									standBlock->init(st);
 									cMove = standBlock;
@@ -489,13 +489,13 @@ int character::checkBlocking(action *& cMove, int input[], int &connectFlag, int
 	case 7:
 	case 4:
 	case 1:
-		if(aerial){
+		if(aerial) {
 			if(airBlock->cancel(cMove, connectFlag, hitFlag)) {
 				airBlock->init(st);
 				cMove = airBlock;
 			}
-		} else { 
-			if(input[0] > 3){ 
+		} else {
+			if(input[0] > 3) {
 				if(standBlock->cancel(cMove, connectFlag, hitFlag)) {
 					standBlock->init(st);
 					cMove = standBlock;
@@ -510,11 +510,11 @@ int character::checkBlocking(action *& cMove, int input[], int &connectFlag, int
 		success = true;
 		break;
 	}
-	if(success){
+	if(success) {
 		ret = 0;
-		for(int i = 1; i < 7; i++){
+		for(int i = 1; i < 7; i++) {
 			if(input[i] % 3 != 1)
-			ret = 1;
+				ret = 1;
 		}
 	}
 	return ret;
@@ -526,40 +526,40 @@ int character::takeHit(action *& cMove, hStat & s, int b, int &f, int &c, int &h
 	int freeze = s.stun/4 + 10;
 	p = cMove->takeHit(s, b, f, c, h);
 	if(p == 1) health -= s.damage;
-	else if(p > -2) { 
+	else if(p > -2) {
 		health -= s.chip;
-		if(p == -1 && health <= 0){ 
+		if(p == -1 && health <= 0) {
 			health = 1;
 		}
 	}
-	if(health <= 0){ 
+	if(health <= 0) {
 		health = 0;
 		dead = true;
 	}
-	if(dead == true){
+	if(dead == true) {
 		cMove = die;
 		aerial = true;
-	} else if (p == 1){
+	} else if (p == 1) {
 		if(s.launch) aerial = 1;
-		if(s.stun != 0){
+		if(s.stun != 0) {
 			f = 0;
-			if(aerial){
+			if(aerial) {
 				untech->init(s.stun+s.untech);
 				cMove = untech;
 				resetAirOptions();
-			} else if(cMove->crouch){
+			} else if(cMove->crouch) {
 				crouchReel->init(s.stun + s.stun/5);
 				cMove = crouchReel;
 			} else {
 				reel->init(s.stun);
 				cMove = reel;
 			}
-		} 
+		}
 	} else if (p == -1) {
 		if(meter[0] + 6 < 300) meter[0] += 6;
 		else meter[0] = 300;
 	}
-	if(p > -2){
+	if(p > -2) {
 		if(meter[0] + 1 < 300) meter[0] += 1;
 		else meter[0] = 300;
 	}
@@ -579,14 +579,14 @@ bool avatar::acceptTarget(action * c, int f)
 
 void character::land(action *& cMove, int &f, int &c, int &h)
 {
-	if(cMove->allowed.b.block){
+	if(cMove->allowed.b.block) {
 		standBlock->init(airBlock->counter);
 		cMove = standBlock;
-	} else { 
+	} else {
 		cMove = cMove->land(f, c, h);
 		if(!cMove) cMove = neutral;
 	}
-	aerial = 0; 
+	aerial = 0;
 	resetAirOptions();
 }
 

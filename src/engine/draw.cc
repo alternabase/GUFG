@@ -1,7 +1,7 @@
 /*Drawing routines for project: Ground Up Fighting Game
  *
- *Written by Alex Kelly in 2012, under MIT OSI
- *For detailed license information, see the file COPYING in this directory
+ * Written by Alex Kelly in 2012, under MIT OSI
+ * For detailed license information, see the file COPYING in this directory
  */
 
 #include "interface.h"
@@ -20,17 +20,17 @@ void interface::draw()
 	glEnable( GL_TEXTURE_2D );
 	glBindTexture(GL_TEXTURE_2D, background);
 	glBegin(GL_QUADS);
-		glTexCoord2i(0, 0);
-		glVertex3f((GLfloat)(-bg.x)*scalingFactor, (GLfloat)(bg.y)*scalingFactor, 0.f);
+	glTexCoord2i(0, 0);
+	glVertex3f((GLfloat)(-bg.x)*scalingFactor, (GLfloat)(bg.y)*scalingFactor, 0.f);
 
-		glTexCoord2i(1, 0);
-		glVertex3f((GLfloat)(bg.w - bg.x)*scalingFactor, (GLfloat)(bg.y)*scalingFactor, 0.f);
+	glTexCoord2i(1, 0);
+	glVertex3f((GLfloat)(bg.w - bg.x)*scalingFactor, (GLfloat)(bg.y)*scalingFactor, 0.f);
 
-		glTexCoord2i(1, 1);
-		glVertex3f((GLfloat)(bg.w - bg.x)*scalingFactor, (GLfloat)(bg.h + bg.y)*scalingFactor, 0.f);
+	glTexCoord2i(1, 1);
+	glVertex3f((GLfloat)(bg.w - bg.x)*scalingFactor, (GLfloat)(bg.h + bg.y)*scalingFactor, 0.f);
 
-		glTexCoord2i(0, 1);
-		glVertex3f((GLfloat)(-bg.x)*scalingFactor, (GLfloat)(bg.h + bg.y)*scalingFactor, 0.f);
+	glTexCoord2i(0, 1);
+	glVertex3f((GLfloat)(-bg.x)*scalingFactor, (GLfloat)(bg.h + bg.y)*scalingFactor, 0.f);
 	glEnd();
 
 	if(timer / 60 > 99) sprintf(buffer, "99");
@@ -38,9 +38,9 @@ void interface::draw()
 	else sprintf(buffer, "%i", timer / 60);
 
 	drawGlyph(buffer, 700, 200, 0, 90, 1);
-	for(int i = 0; i < 2; i++){
+	for(int i = 0; i < 2; i++) {
 		drawGlyph(p[i]->pick()->name, 100+800*i, 600, 30, 40, 0+2*i);
-		if(combo[i] > 1){
+		if(combo[i] > 1) {
 			glColor4f(1.0, 1.0-.5*illegit[i], 1.0-.5*illegit[i], 1.0);
 			sprintf(buffer, "%i hits", combo[i]);
 			drawGlyph(buffer, 100+800*i, 600, 400, 75, 0+2*i);
@@ -50,21 +50,21 @@ void interface::draw()
 		}
 	}
 
-	if(timer > 100 * 60 && timer < 100 * 60 + 31){ 
+	if(timer > 100 * 60 && timer < 100 * 60 + 31) {
 		int l = p[0]->rounds + p[1]->rounds + 1;
 		sprintf(buffer, "Round %i", l);
 		if(timer == 100 * 60 + 30)
 			Mix_PlayChannel(3, announceRound[l - 1], 0);
 		drawGlyph(buffer, 0, 1600, 375, 150, 1);
 	}
-	if(timer > 99 * 60 && timer < 99 * 60 + 31){ 
+	if(timer > 99 * 60 && timer < 99 * 60 + 31) {
 		drawGlyph("FIGHT", 0, 1600, 375, 150, 1);
 		if(timer == 99 * 60 + 30)
 			Mix_PlayChannel(3, announceFight, 0);
 	}
 
-	if(roundEnd && endTimer > 5 * 60 - 31){ 
-		if(p[0]->pick()->health > 0 && p[1]->pick()->health > 0){
+	if(roundEnd && endTimer > 5 * 60 - 31) {
+		if(p[0]->pick()->health > 0 && p[1]->pick()->health > 0) {
 			drawGlyph("TIME OUT", 0, 1600, 300, 200, 1);
 			if(endTimer == 5 * 60 - 1)
 				Mix_PlayChannel(3, announceEnd[0], 0);
@@ -74,20 +74,20 @@ void interface::draw()
 				Mix_PlayChannel(3, announceEnd[1], 0);
 		}
 	}
-	if(endTimer > 3 * 60 + 29 && endTimer < 4 * 60){ 
-		if(p[0]->pick()->health > p[1]->pick()->health){ 
+	if(endTimer > 3 * 60 + 29 && endTimer < 4 * 60) {
+		if(p[0]->pick()->health > p[1]->pick()->health) {
 			sprintf(buffer, "%s", p[0]->pick()->name);
 			drawGlyph(buffer, 0, 1600, 300, 150, 1);
 			drawGlyph("Wins", 0, 1600, 450, 150, 1);
 			if(endTimer == 4 * 60 - 1)
 				Mix_PlayChannel(3, announceWinner[selection[0]], 0);
-		} else if(p[1]->pick()->health > p[0]->pick()->health){
+		} else if(p[1]->pick()->health > p[0]->pick()->health) {
 			sprintf(buffer, "%s", p[1]->pick()->name);
 			drawGlyph(buffer, 0, 1600, 300, 150, 1);
 			drawGlyph("Wins", 0, 1600, 450, 150, 1);
 			if(endTimer == 4 * 60 - 1)
 				Mix_PlayChannel(3, announceWinner[selection[1]], 0);
-		} else if(p[0]->pick()->health <= 0){ 
+		} else if(p[0]->pick()->health <= 0) {
 			sprintf(buffer, "Double KO");
 			drawGlyph(buffer, 0, 1600, 375, 150, 1);
 			if(endTimer == 4 * 60 - 1)
@@ -100,14 +100,14 @@ void interface::draw()
 		}
 	}
 	glDisable( GL_TEXTURE_2D );
-	for(int i = 0; i < 2; i++){
+	for(int i = 0; i < 2; i++) {
 		p[i]->drawMeters(numRounds, scalingFactor);
 		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	}
 
 	glEnable( GL_TEXTURE_2D );
-	for(int i = 0; i < thingComplexity; i++){
-		if(things[i]->spriteCheck()) 
+	for(int i = 0; i < thingComplexity; i++) {
+		if(things[i]->spriteCheck())
 			things[i]->draw(bg.x, bg.y, scalingFactor);
 		glDisable(GL_TEXTURE_2D);
 		if(!things[i]->spriteCheck())
@@ -118,7 +118,7 @@ void interface::draw()
 		glEnable( GL_TEXTURE_2D );
 	}
 	glDisable( GL_TEXTURE_2D );
-	if(freeze > 0){
+	if(freeze > 0) {
 		glColor4f(0.0f, 0.0f, 0.0f, 0.4f);
 		glRectf(0.0f, 0.0f, (GLfloat)screenWidth*scalingFactor, (GLfloat)screenHeight*scalingFactor);
 		freeze--;
@@ -132,19 +132,19 @@ void interface::draw()
 void player::drawMeters(int n, float scalingFactor)
 {
 	SDL_Rect r[n];
-	for(int i = 0; i < n; i++){
+	for(int i = 0; i < n; i++) {
 		r[i].y = 24; r[i].w = 20; r[i].h = 10;
-		if(ID == 1) r[i].x = 680 - 24 * i; 
+		if(ID == 1) r[i].x = 680 - 24 * i;
 		else r[i].x = 900 + 24 * i;
 	}
-	for(int i = 0; i < n; i++){
+	for(int i = 0; i < n; i++) {
 		if(rounds > i) glColor4f(0.0f, 1.0f, 1.0f, 1.0f);
 		else glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
 		glRectf((GLfloat)(r[i].x)*scalingFactor, (GLfloat)(r[i].y)*scalingFactor, (GLfloat)(r[i].x + r[i].w)*scalingFactor, (GLfloat)(r[i].y + r[i].h)*scalingFactor);
 	}
 	glFlush();
 	int h = 0;
-	if(cMove->hidesMeter) 
+	if(cMove->hidesMeter)
 		h = cMove->cost;
 	pick()->drawMeters(ID, scalingFactor, h);
 	glFlush();
@@ -154,15 +154,15 @@ void character::drawMeters(int ID, float scalingFactor, int hidden)
 {
 	SDL_Rect m;
 	SDL_Rect h;
-	if(health >= 0) h.w = health; else h.w = 1; 
+	if(health >= 0) h.w = health; else h.w = 1;
 
-	if(ID == 1) h.x = 100 + (600 - h.w); 
+	if(ID == 1) h.x = 100 + (600 - h.w);
 	else h.x = 900;
 	h.h = 10;
 	h.y = 10;
 
 	int R = 0, G = 255, B = 0;
-	if(meter[0] >= 0) m.w = (meter[0]+hidden)*2; else m.w = 0; 
+	if(meter[0] >= 0) m.w = (meter[0]+hidden)*2; else m.w = 0;
 	if(ID == 1) m.x = 100;
 	else m.x = 900 + (600 - m.w);
 	m.h = 10; m.y = 860;
@@ -181,12 +181,12 @@ void instance::drawBoxen(int x, int y, float scalingFactor)
 {
 	glColor4f(1.0f, 1.0f, 1.0f, 0.5f);
 	glRectf((GLfloat)(collision.x - x)*scalingFactor, (GLfloat)(-collision.y - y)*scalingFactor, (GLfloat)(collision.x + collision.w - x)*scalingFactor, (GLfloat)(-collision.y - collision.h - y)*scalingFactor);
-	for(int i = 0; i < regComplexity; i++){
+	for(int i = 0; i < regComplexity; i++) {
 		glFlush();
 		glColor4f(0.0f, 1.0f, (GLfloat)(ID - 1.0f)/2.0f, 0.5f);
 		glRectf((GLfloat)(hitreg[i].x - x)*scalingFactor, (GLfloat)(-hitreg[i].y - y)*scalingFactor, (GLfloat)(hitreg[i].x + hitreg[i].w - x)*scalingFactor, (GLfloat)(-hitreg[i].y - hitreg[i].h - y)*scalingFactor);
 	}
-	for(int i = 0; i < hitComplexity; i++){
+	for(int i = 0; i < hitComplexity; i++) {
 		glFlush();
 		glColor4f(1.0f, 0.0f, (GLfloat)(ID - 1.0f)/2.0f, 0.5f);
 		glRectf((GLfloat)(hitbox[i].x - x)*scalingFactor, (GLfloat)(-hitbox[i].y - y)*scalingFactor, (GLfloat)(hitbox[i].x + hitbox[i].w - x)*scalingFactor, (GLfloat)(-hitbox[i].y - hitbox[i].h - y)*scalingFactor);
@@ -200,17 +200,17 @@ void instance::draw(int x, int y, float scalingFactor)
 	int realPosY = collision.y;
 	int realPosX = posX;
 
-	for(int i = 0; i < hitComplexity; i++){
+	for(int i = 0; i < hitComplexity; i++) {
 		if(hitbox[i].y < realPosY) realPosY = hitbox[i].y;
-		if(facing == 1){
+		if(facing == 1) {
 			if(hitbox[i].x < realPosX) realPosX = hitbox[i].x;
 		} else {
 			if(hitbox[i].x + hitbox[i].w > realPosX) realPosX = hitbox[i].x + hitbox[i].w;
 		}
 	}
-	for(int i = 0; i < regComplexity; i++){
+	for(int i = 0; i < regComplexity; i++) {
 		if(hitreg[i].y < realPosY) realPosY = hitreg[i].y;
-		if(facing == 1){
+		if(facing == 1) {
 			if(hitreg[i].x < realPosX) realPosX = hitreg[i].x;
 		} else {
 			if(hitreg[i].x + hitreg[i].w > realPosX) realPosX = hitreg[i].x + hitreg[i].w;
@@ -224,8 +224,8 @@ void instance::draw(int x, int y, float scalingFactor)
 void player::drawHitParticle(int x, int y, float scalingFactor)
 {
 	/*Stand-in for now, just to indicate block type*/
-	if(particleLife > 0){
-		switch (particleType){
+	if(particleLife > 0) {
+		switch (particleType) {
 		case 1:
 			glColor4f(1.0f, 0.0f, 0.0f, 0.7f);
 			break;
@@ -253,10 +253,10 @@ void avatar::draw(action *& cMove, int facing, int x, int y, int f, float scalin
 int interface::drawGlyph(const char * string, int x, int space, int y, int height, int just)
 {
 	int w, h, width = 0, padding = 0, totalWidth = 0;
-	if(just != 0){	
-		for(unsigned int i = 0; i < strlen(string); i++){
+	if(just != 0) {
+		for(unsigned int i = 0; i < strlen(string); i++) {
 			if(string[i] == ' ') totalWidth += w * sf / 2;
-			else if(string[i] == '\0');
+			else if(string[i] == '\0') ;
 			else{
 				glBindTexture(GL_TEXTURE_2D, glyph[toupper(string[i])]);
 
@@ -271,7 +271,7 @@ int interface::drawGlyph(const char * string, int x, int space, int y, int heigh
 	}
 
 	float sf;
-	for(unsigned int i = 0; i < strlen(string); i++){
+	for(unsigned int i = 0; i < strlen(string); i++) {
 		if(string[i] == ' ') x += (float)width / 2.0;
 		else{
 			glBindTexture(GL_TEXTURE_2D, glyph[toupper(string[i])]);
@@ -301,10 +301,10 @@ int interface::drawGlyph(const char * string, int x, int space, int y, int heigh
 
 void action::draw(int facing, int x, int y, int f, float scalingFactor)
 {
-	if(sprite[f]){
+	if(sprite[f]) {
 		glBindTexture(GL_TEXTURE_2D, sprite[f]);
 		glBegin(GL_QUADS);
-		if(facing == 1){
+		if(facing == 1) {
 			glTexCoord2i(0, 0);
 			glVertex3f((GLfloat)(x)*scalingFactor, (GLfloat)(y - height[f])*scalingFactor, 0.f);
 
@@ -346,7 +346,7 @@ bool avatar::spriteCheck(action *& cMove, int f)
 
 bool action::spriteCheck(int f)
 {
-	if(sprite[f] != 0) { 
+	if(sprite[f] != 0) {
 		return 1;
 	}
 	else return 0;
@@ -357,22 +357,22 @@ void interface::writeImage(const char * movename, int frame, action * move)
 	int realPosY = move->collision[frame].y;
 	int realPosX = 0;
 	SDL_Surface * image = NULL;
-	int maxY = move->collision[frame].y + move->collision[frame].h, 
+	int maxY = move->collision[frame].y + move->collision[frame].h,
 	    maxX = move->collision[frame].x + move->collision[frame].w;
-	for(int i = 0; i < move->regComplexity[frame]; i++){
-		if(move->hitreg[frame][i].y < realPosY) 
+	for(int i = 0; i < move->regComplexity[frame]; i++) {
+		if(move->hitreg[frame][i].y < realPosY)
 			realPosY = move->hitreg[frame][i].y;
-		if(move->hitreg[frame][i].x < realPosX) 
+		if(move->hitreg[frame][i].x < realPosX)
 			realPosX = move->hitreg[frame][i].x;
 		if(move->hitreg[frame][i].x + move->hitreg[frame][i].w > maxX)
 			maxX = move->hitreg[frame][i].x + move->hitreg[frame][i].w;
 		if(move->hitreg[frame][i].y + move->hitreg[frame][i].h > maxY)
 			maxY = move->hitreg[frame][i].y + move->hitreg[frame][i].h;
 	}
-	for(int i = 0; i < move->hitComplexity[frame]; i++){
-		if(move->hitbox[frame][i].y < realPosY) 
+	for(int i = 0; i < move->hitComplexity[frame]; i++) {
+		if(move->hitbox[frame][i].y < realPosY)
 			realPosY = move->hitbox[frame][i].y;
-		if(move->hitbox[frame][i].x < realPosX) 
+		if(move->hitbox[frame][i].x < realPosX)
 			realPosX = move->hitbox[frame][i].x;
 		if(move->hitbox[frame][i].x + move->hitbox[frame][i].w > maxX)
 			maxX = move->hitbox[frame][i].x + move->hitbox[frame][i].w;
@@ -384,11 +384,11 @@ void interface::writeImage(const char * movename, int frame, action * move)
 	int h = maxY + 5;
 	int x = 0;
 	int y = 0;
-	if(realPosY < 0){ 
+	if(realPosY < 0) {
 		h -= realPosY;
 		y = realPosY;
 	}
-	if(realPosX < 0){
+	if(realPosX < 0) {
 		w -= realPosX;
 		x = realPosX;
 	}
@@ -405,7 +405,7 @@ void interface::writeImage(const char * movename, int frame, action * move)
 	Uint32 amask = 0xff000000;
 #endif
 	image = SDL_CreateRGBSurface(SDL_SWSURFACE, w, h, 32,
-				 rmask, gmask, bmask, amask);
+	                             rmask, gmask, bmask, amask);
 	screenInit(w, h);
 
 	sprintf(fname, "%s#%i.bmp", movename, frame);
@@ -425,12 +425,12 @@ void interface::writeImage(const char * movename, int frame, action * move)
 void action::drawBoxen(int frame, int x, int y){
 	glColor4f(1.0f, 1.0f, 1.0f, 0.5f);
 	glRectf((GLfloat)(collision[frame].x - x), (GLfloat)(-collision[frame].y - y), (GLfloat)(collision[frame].x + collision[frame].w - x), (GLfloat)(-collision[frame].y - collision[frame].h - y));
-	for(int i = 0; i < regComplexity[frame]; i++){
+	for(int i = 0; i < regComplexity[frame]; i++) {
 		glFlush();
 		glColor4f(0.0f, 1.0f, 0.0f, 0.5f);
 		glRectf((GLfloat)(hitreg[frame][i].x - x), (GLfloat)(-hitreg[frame][i].y - y), (GLfloat)(hitreg[frame][i].x + hitreg[frame][i].w - x), (GLfloat)(-hitreg[frame][i].y - hitreg[frame][i].h - y));
 	}
-	for(int i = 0; i < hitComplexity[frame]; i++){
+	for(int i = 0; i < hitComplexity[frame]; i++) {
 		glFlush();
 		glColor4f(1.0f, 0.0f, 0.0f, 0.5f);
 		glRectf((GLfloat)(hitbox[frame][i].x - x), (GLfloat)(-hitbox[frame][i].y - y), (GLfloat)(hitbox[frame][i].x + hitbox[frame][i].w - x), (GLfloat)(-hitbox[frame][i].y - hitbox[frame][i].h - y));
@@ -443,7 +443,7 @@ bool interface::screenInit(int w, int h)
 	/*Initialize SDL*/
 	if(SDL_Init(SDL_INIT_EVERYTHING) < 0) return false;
 	/*WM stuff*/
-	if(screen){ 
+	if(screen) {
 		SDL_FreeSurface(screen);
 		screen = NULL;
 	}

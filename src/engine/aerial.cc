@@ -26,9 +26,9 @@ void airMove::build(const char * n)
 
 void airMove::feed(action * c, int code, int i)
 {
-	if(code == 1){ 
+	if(code == 1) {
 		landing = c;
-		if(tempLanding){ 
+		if(tempLanding) {
 			delete [] tempLanding;
 		}
 	} else action::feed(c, code, i);
@@ -36,10 +36,10 @@ void airMove::feed(action * c, int code, int i)
 
 char * airMove::request(int code, int i)
 {
-	if(code == 1){
+	if(code == 1) {
 		return tempLanding;
 	}
-	else return action::request(code, i); 
+	else return action::request(code, i);
 }
 
 bool airMove::setParameter(char * buffer)
@@ -49,7 +49,7 @@ bool airMove::setParameter(char * buffer)
 
 	char * token = strtok(buffer, "\t: \n");
 
-	if(!strcmp("Landing", token)){
+	if(!strcmp("Landing", token)) {
 		token = strtok(NULL, "\t: \n");
 		tempLanding = new char[strlen(token)+1];
 		strcpy(tempLanding, token);

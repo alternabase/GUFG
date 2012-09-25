@@ -19,8 +19,8 @@ set (gufg_VERSION_PATCH 1)
 aux_source_directory (	src/engine ENGINE)
 aux_source_directory (	src/characters CHARACTERS)
 
-set (SOURCES	ENGINE
-		CHARACTERS) 
+set (SOURCES	${ENGINE}
+		${CHARACTERS}) 
 
 set (CMAKE_CXX_FLAGS "-D_GLIBCXX_USE_NANOSLEEP -O2 -g -Wall -Wctor-dtor-privacy -Wno-format-contains-nul -std=c++11 -pedantic")
 set (QT_USE_QTOPENGL TRUE)
@@ -53,7 +53,7 @@ endif (APPLE)
 add_executable (gufg 
 		WIN32
 		MACOSX_BUNDLE
-		src/keytest.cc
+		src/game.cc
 		${SOURCES})
 
 add_executable (bmpout
@@ -65,19 +65,19 @@ add_executable (bmpout
 
 INSTALL(TARGETS gufg
 	RUNTIME
-	DESTINATION package
+	DESTINATION .
 	COMPONENT gufg)
 
 INSTALL(DIRECTORY characters
-	DESTINATION package
+	DESTINATION .
 	COMPONENT gufg)
 
 INSTALL(DIRECTORY art
-	DESTINATION package
+	DESTINATION .
 	COMPONENT gufg)
 
 INSTALL(DIRECTORY scripts
-	DESTINATION package
+	DESTINATION .
 	COMPONENT source
 	DESTINATION .
 	COMPONENT utilities)
@@ -90,29 +90,27 @@ INSTALL(FILES ${ACTUAL_SDL_LIBRARY}
 		${ZLIB_LIBRARY}
 		${SDLMIXER_LIBRARY}
 		${VORBIS_LIBRARY}
-	DESTINATION package
+	DESTINATION .
 	COMPONENT gufg
-	DESTINATION package
+	DESTINATION .
 	COMPONENT utilities)
 
 INSTALL(FILES README COPYING
-	DESTINATION package
+	DESTINATION .
 	COMPONENT gufg
-	DESTINATION package
+	DESTINATION .
 	COMPONENT utilities
-	DESTINATION package
+	DESTINATION .
 	COMPONENT source)
 
 INSTALL(FILES CMakeLists.txt .gitignore .gitmodules
-       	DESTINATION package/src
+       	DESTINATION .
 	COMPONENT source)
 
 
-INSTALL(DIRECTORY src/
-	DESTINATION package/src
-	COMPONENT source
-		PATTERN "*.cc"
-		PATTERN "*.h")
+INSTALL(DIRECTORY src
+	DESTINATION .
+	COMPONENT source)
 
 set (CPACK_PACKAGE_NAME "GUFG")
 set (CPACK_PACKAGE_VENDOR "The GUFG Team")
