@@ -1,6 +1,8 @@
-# Copyright (C) 2012 Joseph Woodruff/The GUFG Programming Team
+# Copyright (C) 2012 Joseph Woodruff/H FOrrest Alexander/The GUFG Programming Team
 #
 # CMake build file, cobbled together from past experience and the SDL wiki
+#And modified by me, probably to the point of not working right.
+
 
 cmake_minimum_required(VERSION 2.6)
 
@@ -14,35 +16,25 @@ set (gufg_VERSION_MAJOR 0)
 set (gufg_VERSION_MINOR 0)
 set (gufg_VERSION_PATCH 1)
 
-set (SOURCES	auxil.cc 
-		character.cc 
-		draw.cc 
-		hitstun.cc
-		interface.cc 
-		action.cc 
-		player.cc 
-		red.cc
-		yellow.cc 
-		special.cc 
-		aerial.cc
-		utility.cc
-		projectile.cc
-		trie.cc) 
+aux_source_directory (	src/engine ENGINE)
+aux_source_directory (	src/characters CHARACTERS)
+
+set (SOURCES	ENGINE
+		CHARACTERS) 
 
 set (CMAKE_CXX_FLAGS "-D_GLIBCXX_USE_NANOSLEEP -O2 -g -Wall -Wctor-dtor-privacy -Wno-format-contains-nul -std=c++11 -pedantic")
 set (QT_USE_QTOPENGL TRUE)
 
 find_package (SDL REQUIRED)
 find_package (SDL_image REQUIRED)
-find_package (OpenGL REQUIRED)
 find_package (SDL_mixer REQUIRED)
+find_package (OpenGL REQUIRED)
 link_libraries (
+	SDLmain # not included in SDL_LIBRARY variable
 	${SDL_LIBRARY}
 	${SDLIMAGE_LIBRARY}
-	${OPENGL_LIBRARIES}
 	${SDLMIXER_LIBRARY}
-	SDLmain # not included in SDL_LIBRARY variable
-)
+	${OPENGL_LIBRARIES})
 
 if (WIN32)
 	set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_WIN32 -static-libstdc++ -static-libgcc")
@@ -61,39 +53,31 @@ endif (APPLE)
 add_executable (gufg 
 		WIN32
 		MACOSX_BUNDLE
-		keytest.cc
+		src/keytest.cc
 		${SOURCES})
 
 add_executable (bmpout
 		WIN32
 		MACOSX_BUNDLE
 		EXCLUDE_FROM_ALL
-		bmp.cc
+		src/bmp.cc
 		${SOURCES})
 
 INSTALL(TARGETS gufg
 	RUNTIME
-	DESTINATION .
+	DESTINATION package
 	COMPONENT gufg)
 
-INSTALL(DIRECTORY White
-	DESTINATION .
+INSTALL(DIRECTORY characters
+	DESTINATION package
 	COMPONENT gufg)
 
-INSTALL(DIRECTORY Red
-	DESTINATION .
-	COMPONENT gufg)
-
-INSTALL(DIRECTORY Yellow
-	DESTINATION .
-	COMPONENT gufg)
-
-INSTALL(DIRECTORY Misc
-	DESTINATION .
+INSTALL(DIRECTORY art
+	DESTINATION package
 	COMPONENT gufg)
 
 INSTALL(DIRECTORY scripts
-	DESTINATION .
+	DESTINATION package
 	COMPONENT source
 	DESTINATION .
 	COMPONENT utilities)
@@ -106,36 +90,29 @@ INSTALL(FILES ${ACTUAL_SDL_LIBRARY}
 		${ZLIB_LIBRARY}
 		${SDLMIXER_LIBRARY}
 		${VORBIS_LIBRARY}
-	DESTINATION .
+	DESTINATION package
 	COMPONENT gufg
-	DESTINATION .
+	DESTINATION package
 	COMPONENT utilities)
 
 INSTALL(FILES README COPYING
-	DESTINATION .
+	DESTINATION package
 	COMPONENT gufg
-	DESTINATION .
+	DESTINATION package
 	COMPONENT utilities
-	DESTINATION .
+	DESTINATION package
 	COMPONENT source)
 
 INSTALL(FILES CMakeLists.txt .gitignore .gitmodules
-       	DESTINATION src
+       	DESTINATION package/src
 	COMPONENT source)
 
 
-INSTALL(DIRECTORY .
-	DESTINATION src
+INSTALL(DIRECTORY src/
+	DESTINATION package/src
 	COMPONENT source
 		PATTERN "*.cc"
-		PATTERN "*.h"
-		PATTERN "_CPack_Packages" EXCLUDE
-		PATTERN "*cmake*" EXCLUDE
-		PATTERN "*CMake*" EXCLUDE
-		PATTERN "*.exe" EXCLUDE
-		PATTERN "*.txt" EXCLUDE
-		PATTERN "*.txt~" EXCLUDE
-		PATTERN ".git" EXCLUDE)
+		PATTERN "*.h")
 
 set (CPACK_PACKAGE_NAME "GUFG")
 set (CPACK_PACKAGE_VENDOR "The GUFG Team")
@@ -146,7 +123,7 @@ set (CPACK_PACKAGE_VERSION_MAJOR "0")
 set (CPACK_PACKAGE_VERSION_MINOR "0")
 set (CPACK_PACKAGE_VERSION_PATCH "1")
 set (CPACK_RESOURCE_FILE_LICENSE "${PROJECT_BINARY_DIR}/COPYING")
-set (CPACK_RESOURCE_FILE_README "${PROJECT_BINARY_DIR}/README")
+set (CPACK_RESOURCE_FILE_README "${PROJECT_BINARY_DIR}/README.md")
 set (CPACK_PACKAGE_INSTALL_DIRECTORY "GUFG ${gufg_VERSION_MAJOR}.${gufg_VERSION_MINOR}.${gufg_VERSION_PATCH}")
 set (CPACK_COMPONENTS_ALL gufg utilities source)
 

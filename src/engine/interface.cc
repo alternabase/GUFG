@@ -1,18 +1,20 @@
-/*Interface class for GUFG
- *This will run all the main game functions within GUFG
- *
- *Written by Alex Kelly in 2012
- *License to come
+/*Interface class for GUFG.
+ *This will run all the main game functions within GUFG.
+ *No kidding.
+ *Written by Alex Kelly in 2012.
+ *Mangled by H Forrest Alexander in the autumn of that same year.
+ *I think there's a license somewhere.
  */
 
 #include "interface.h"
-#include <cstring>
-#include <math.h>
-#include <assert.h>
 #include <SDL/SDL_opengl.h>
 #include <algorithm>
+#include <assert.h>
+#include <cstring>
 #include <fstream>
 #include <iostream>
+#include <math.h>
+
 interface::interface()
 {
 	char buffer[50];
@@ -31,7 +33,7 @@ interface::interface()
 	select[0] = 0;
 	select[1] = 0;
 
-	read.open("Misc/.res.conf");
+	read.open("Misc/res.conf");
 	if(read.fail()){ 
 		scalingFactor = 0.5;
 		fullscreen = false;
