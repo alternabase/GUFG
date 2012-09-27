@@ -6,7 +6,7 @@ Check: 65
 State: 384
 Payload: beam/Dstop2e
 SpawnsOn: 1
-SpawnPosition: 120 : 260
+SpawnPosition: 120 : 0
 Properties: 
 #18
 $C	10 -20 110 160

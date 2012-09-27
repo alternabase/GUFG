@@ -7,7 +7,7 @@ State: 256 : 384 : 256
 Damage: 34.5 : 0
 Payload: beam/2E
 SpawnsOn: 19
-SpawnPosition: 120 : 260
+SpawnPosition: 120 : 0
 Connect: 0 : >f2E
 Connect: 1 : >f2E
 Stun: 16 : 10

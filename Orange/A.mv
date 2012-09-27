@@ -7,7 +7,7 @@ State: 256 : 508
 Damage: 9
 Payload: beam/A
 SpawnsOn: 9
-SpawnPosition: 180 : 60
+SpawnPosition: 180 : 194
 Stun: 10
 Untech: 7
 Push: 2
