@@ -1,6 +1,7 @@
 # Copyright (C) 2012 Joseph Woodruff/The GUFG Programming Team
 #
 # CMake build file, cobbled together from past experience and the SDL wiki
+#Tips taken from tutorial at http://www.bluequartz.net/projects/EIM_Segmentation/SoftwareDocumentation/html/usewithcmakeproject.html
 
 cmake_minimum_required(VERSION 2.6)
 
@@ -71,6 +72,14 @@ add_executable (bmpout
 		EXCLUDE_FROM_ALL
 		bmp.cc
 		${SOURCES})
+
+find_package(Doxygen)
+if (DOXYGEN_FOUND)
+	configure_file(Doxyfile.in
+	${PROJECT_BINARY_DIR}/Doxyfile @ONLY IMMEDIATE)
+	add_custom_target(doc
+	${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
+endif(DOXYGEN_FOUND)
 
 INSTALL(TARGETS gufg
 	RUNTIME
@@ -147,7 +156,7 @@ set (CPACK_PACKAGE_VERSION_MAJOR "0")
 set (CPACK_PACKAGE_VERSION_MINOR "0")
 set (CPACK_PACKAGE_VERSION_PATCH "1")
 set (CPACK_RESOURCE_FILE_LICENSE "${PROJECT_BINARY_DIR}/COPYING")
-set (CPACK_RESOURCE_FILE_README "${PROJECT_BINARY_DIR}/README")
+set (CPACK_RESOURCE_FILE_README "${PROJECT_BINARY_DIR}/README.md")
 set (CPACK_PACKAGE_INSTALL_DIRECTORY "GUFG ${gufg_VERSION_MAJOR}.${gufg_VERSION_MINOR}.${gufg_VERSION_PATCH}")
 set (CPACK_COMPONENTS_ALL gufg utilities source)
 
