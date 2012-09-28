@@ -6,27 +6,29 @@
  */
 
 #include "interface.h"
-#include <cstring>
-#include <math.h>
-#include <assert.h>
 #include <SDL/SDL_opengl.h>
 #include <algorithm>
+#include <assert.h>
+#include <cstring>
 #include <fstream>
 #include <iostream>
+#include <math.h>
 interface::interface()
 {
 	char buffer[50];
 	numChars = 3;
 	shortcut = false;
+	boxen = false;
 	std::ifstream read;
+
 	/*Initialize some pseudo-constants*/
-	screenWidth = 1600; //By screen, I mean the window the game occurs in.
+	screenWidth = 1600; /*screen{Width,Height} describe the size of the window holding the game.*/
 	screenHeight = 900;
 	screen = NULL;
-	bg.w = 3200;       //By background, I mean the thing the characters actually move on. Bigger than the screen.
+	bg.w = 3200; /*The screen gives a partial view of the background, which is the area available for character movement.*/
 	bg.h = 1800;
-	floor = 50; //Value of the floor. This is the maximum distance downward that characters can travel.
-	wall = 50;         //The size of the offset at which characters start to scroll the background, and get stuck.
+	floor = 50; /*Value of the floor. This is the maximum distance downward that characters can travel.*/
+	wall = 50; /*The size of the offset at which characters start to scroll the background, and get stuck.*/
 
 	select[0] = 0;
 	select[1] = 0;
@@ -83,6 +85,7 @@ interface::interface()
 	matchInit();
 }
 
+/*This function loads a few miscellaneous things the game will need in all cases*/
 void interface::loadMisc()
 {
 	char buffer[200];
@@ -107,6 +110,7 @@ void interface::loadMisc()
 	announceSelect = Mix_LoadWAV("Misc/Announcer/Select.ogg");
 }
 
+/*Initialize SDL and openGL, creating a window, among other things*/
 bool interface::screenInit()
 {
 	/*Initialize SDL*/
