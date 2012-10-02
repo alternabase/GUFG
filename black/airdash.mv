@@ -1,18 +1,36 @@
 Name: Airdash
 Buffer: 10 : 0
 Hits: 0
-Frames: 4 : 4
-Next: >airdash
-Check: 1
+Frames: 12 : 12
+Check: 0
 State: 510
 Gain: 0
+Payload: holes/airdash
+SpawnsOn: 0
+SpawnPosition: 300 : 96
 Cost: 0
 Blocks: 0
-Properties: S
+Properties: 
 #0 
 $C	10 40 120 240
 $R	10 40 120 240
-$D	8 0 0 00	-8 -2 0 00	0 3 16 1
+$D	0 0 0 0
+#0 
+$C	10 40 120 240
+$R	10 40 120 240
+$D	0 0 0 0
+#0 
+$C	10 40 120 240
+$R	10 40 120 240
+$D	0 0 0 0
+#0 
+$C	10 40 120 240
+$R	10 40 120 240
+$D	0 0 0 0
+#0 
+$C	10 40 120 240
+$R	10 40 120 240
+$D	0 0 0 0
 #0 
 $C	10 40 120 240
 $R	10 40 120 240

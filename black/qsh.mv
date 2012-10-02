@@ -3,8 +3,8 @@ Buffer: 15 : 0
 Hits: 0
 Frames: 15 : 15
 Payload: holes/qsh
-SpawnsOn: 2
-SpawnPosition: -270 : 23
+SpawnsOn: 1
+SpawnPosition: -195 : 23
 Check: 1
 State: 0
 Gain: 0
@@ -53,15 +53,15 @@ $R	0 300 0 0
 $D	0 0 0 0
 #10
 $C	5 80 110 170
-$R	0 30 65 30
+$R	0 30 0 30
 $D	0 0 0 0
 #11
 $C	6 70 110 190
-$R	67 30 65 80
+$R	67 30 15 80
 $D	0 0 0 0
 #12
 $C	7 60 110 210
-$R	114 30 65 130
+$R	114 30 30 130
 $D	0 0 0 0
 #13
 $C	8 50 110 230

@@ -1,10 +1,10 @@
-Name: b[l]ackdash
+Name: airdash
 Buffer: 0 : 0
 Hits: 0
 Frames: 5 : 5
-Distort: 1 - 6 : -64 : -64
+Distort: 1 - 4 : -32 : -32
 Next: fade
-AttractorType: 2 : 110 : 0
+AttractorType: 2 : 100 : 0
 Check: 0
 State: 0
 Gain: 0
