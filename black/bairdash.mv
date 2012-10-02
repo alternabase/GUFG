@@ -1,18 +1,44 @@
-Name: Air Backdash
+Name: Airdash
 Buffer: 10 : 0
 Hits: 0
-Frames: 3 : 3
-Check: 1
+Frames: 10 : 10
+Check: 0
 State: 510
-Next: >bairdash
 Gain: 0
+Payload: holes/airdash
+SpawnsOn: 0
+SpawnPosition: -180 : 108
 Cost: 0
 Blocks: 0
-Properties: S
+Properties: 
 #0 
 $C	10 40 120 240
 $R	10 40 120 240
-$D	-8 0 0 0	8 -2 0 00	0 3 12 1
+$D	0 0 0 0
+#0 
+$C	10 40 120 240
+$R	10 40 120 240
+$D	0 0 0 0
+#0 
+$C	10 40 120 240
+$R	10 40 120 240
+$D	0 0 0 0
+#0 
+$C	10 40 120 240
+$R	10 40 120 240
+$D	0 0 0 0
+#0 
+$C	10 40 120 240
+$R	10 40 120 240
+$D	0 0 0 0
+#0 
+$C	10 40 120 240
+$R	10 40 120 240
+$D	0 0 0 0
+#0 
+$C	10 40 120 240
+$R	10 40 120 240
+$D	0 0 0 0
 #0 
 $C	10 40 120 240
 $R	10 40 120 240
