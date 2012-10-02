@@ -1,0 +1,18 @@
+Name: b[l]ackdash
+Buffer: 0 : 0
+Hits: 0
+Frames: 2 : 2
+Check: 0
+State: 1024
+Gain: 0
+Cost: 0
+Blocks: 0
+Properties: 
+#0 
+$C	0 0 50 100
+$R	0 0 0 100
+$D	0 6 0 0
+#0 
+$C	0 0 50 100
+$R	0 0 0 100
+$D	0 6 0 0
