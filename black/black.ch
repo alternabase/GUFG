@@ -10,7 +10,7 @@ black
 @WQ = h4
 @wsh = h5656 h3656
 -slide = h5 h4 h1 h2
--qsh = h5454 
+>qsh = h5454
 -jJN = a58 a68 a48 a38 a28 a18
 -jJF = a59 a69 a49 a39 a29 a19
 -jJQ = a57 a67 a47 a37 a27 a17
