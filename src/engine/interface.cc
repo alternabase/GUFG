@@ -437,6 +437,7 @@ void interface::resolve()
 			if(i > 1 && things[i]->dead) cullThing(i);
 		}
 		for(int i = 0; i < attractorComplexity; i++){
+			printf("%i: %i, %i\n", i, globals[i]->posX, globals[i]->posY);
 			if(globals[i]->length <= 0) cullAttractor(i);
 			else globals[i]->length--;
 		}

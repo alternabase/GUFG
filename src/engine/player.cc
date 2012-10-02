@@ -257,22 +257,21 @@ void instance::combineDelta()
 void instance::enforceAttractor(attractor* p)
 {
 	SDL_Rect resultant;
-	resultant.x = p->x; resultant.y = p->y; resultant.w = 0; resultant.h = 0;
+	resultant.x = p->x*facing; resultant.y = p->y; resultant.w = 0; resultant.h = 0;
 	if(!pick()->aerial) resultant.y = 0;
 	int directionX = 0, directionY = 0;
-	if(posX + collision.w/2 > p->posX) directionX = -1; 
+	if(posX + collision.w/2 > p->posX) directionX = 1;
 	else if(posX + collision.w/2 < p->posX) directionX = 1;
-	if(posY + collision.h/2 > p->posY) directionY = 1; 
-	else if(posX + collision.h/2 < p->posY) directionY = -1;
+	if(posY + collision.h/2 > p->posY) directionY = -1;
+	else if(posY + collision.h/2 < p->posY) directionY = -1;
 	float totalDist = sqrt(pow(posX + collision.w/2 - p->posX, 2) + pow(posY + collision.h/2 - p->posY, 2));
 	switch(p->type){
 	case 0:
-		resultant.x *= facing;
 		break;
 	case 1:
 		resultant.x -= totalDist/p->radius;
 		resultant.y -= totalDist/p->radius;
-		resultant.x *= directionX;
+		resultant.x *= directionX*facing;
 		resultant.y *= directionY;
 		break;
 	case 2:
@@ -280,7 +279,7 @@ void instance::enforceAttractor(attractor* p)
 			resultant.x /= 2;
 			resultant.y /= 2;
 		}
-		resultant.x *= directionX;
+		resultant.x *= directionX*facing;
 		resultant.y *= directionY;
 		break;
 	case 3:
@@ -288,12 +287,13 @@ void instance::enforceAttractor(attractor* p)
 			resultant.x = 0;
 			resultant.y = 0;
 		}
-		resultant.x *= directionX;
+		resultant.x *= directionX*facing;
 		resultant.y *= directionY;
 		break;
 	default:
 		return;
 	}
+	printf("%i, %i, %i\n", ID, resultant.x, resultant.y);
 	addVector(resultant);
 }
 
