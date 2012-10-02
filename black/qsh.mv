@@ -2,8 +2,6 @@ Name: Backdash
 Buffer: 15 : 0
 Hits: 0
 Frames: 15 : 15
-Distort: 2 - 300 : -4 : -4
-AttractorType: 2 : 300 : 0
 Check: 1
 State: 0
 Gain: 0
